@@ -1,0 +1,60 @@
+name: DreamThreads
+description: >-
+  DreamThreads exposes the DreamGraph API, a context-first dream interpretation and structured parsing platform. It
+  offers a keyless public dream parser, gated partner interpretation endpoints, a hosted MCP server, and full
+  machine-readable contracts. Interpretations are framed as reflective, not diagnostic or predictive.
+url: https://dreamthreads.apievangelist.com/apis.yml
+created: '2026-08-13'
+modified: '2026-08-13'
+specificationVersion: '0.21'
+tags:
+  - dream analysis
+  - dream interpretation
+  - natural language processing
+  - structured parsing
+  - AI agents
+  - MCP server
+  - OpenAPI
+  - wellness / sleep
+  - research tooling
+apis:
+  - name: DreamGraph API
+    description: >-
+      REST API for dream text parsing and interpretation. Includes a keyless public parser and liveness endpoint, plus
+      gated partner endpoints for structured parsing and reflective interpretation. Also exposes a hosted MCP server,
+      llms.txt, and machine-readable contracts.
+    humanURL: https://mydreamthreads.xyz/dream-interpretation-api
+    baseURL: https://mydreamthreads.xyz/api/v1/dreamgraph
+    tags:
+      - dream analysis
+      - dream interpretation
+      - natural language processing
+      - structured parsing
+      - AI agents
+      - MCP server
+      - OpenAPI
+      - wellness / sleep
+      - research tooling
+    properties:
+      - type: OpenAPI
+        url: https://mydreamthreads.xyz/dream-interpretation-api/openapi.json
+      - type: PostmanCollection
+        url: https://mydreamthreads.xyz/dream-interpretation-api/postman.json
+      - type: MCPServer
+        url: https://mydreamthreads.xyz/mcp
+      - type: LLMsTxt
+        url: https://mydreamthreads.xyz/llms.txt
+      - type: Documentation
+        url: https://mydreamthreads.xyz/dream-interpretation-api
+      - type: Documentation
+        url: https://abdulrahimiqbal.github.io/dreamthreads-developer/
+maintainers:
+  - FN: Rahim Iqbal
+    url: mailto:rahim@mydreamthreads.xyz
+  - FN: DreamThreads Support
+    url: mailto:ariqbal@mun.ca
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 97
+  at: '2026-08-13T12:12:14.505Z'
