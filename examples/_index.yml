@@ -1,0 +1,36 @@
+generated: '2026-08-14'
+method: searched
+source: https://github.com/abdulrahimiqbal/dreamthreads-developer/tree/main/examples
+note: >-
+  First-party runnable clients saved verbatim from the provider's public developer toolkit. The
+  OpenAPI itself also carries in-spec request and response examples on every operation and on all
+  eight problem responses, so an agent can see a real payload for each without calling anything.
+examples:
+  - file: dreamthreads-example-public-curl.sh
+    language: shell
+    operation: parseDreamPublicly
+    auth: none
+    note: Runs with no credentials.
+  - file: dreamthreads-example-curl.sh
+    language: shell
+    operation: interpretDream
+    auth: bearer
+  - file: dreamthreads-example-javascript.mjs
+    language: javascript
+    operation: interpretDream
+    auth: bearer
+  - file: dreamthreads-example-python.py
+    language: python
+    operation: interpretDream
+    auth: bearer
+  - file: dreamthreads-example-README.md
+    language: null
+    note: Provider's own README for the examples directory.
+in_spec_examples:
+  source: openapi/_original/dreamthreads-dreamgraph-openapi.json
+  request_examples: 4
+  response_examples: 3
+  problem_examples: 8
+  note: >-
+    Every 4xx/5xx component response carries a complete RFC 9457 problem example, which is rarer than
+    request examples and is what lets an agent write error handling before its first failed call.

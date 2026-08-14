@@ -1,0 +1,35 @@
+generated: '2026-08-14'
+method: searched
+source: https://mydreamthreads.xyz/dream-interpretation-api
+note: >-
+  One embeddable surface is documented — a hosted interpreter embed offered as an alternative to the
+  REST integration. The provider describes the mechanism (one script, hosted responsive UI,
+  short-lived origin-bound token issued to an approved domain) but does NOT publish a loader URL, a
+  script tag, an element name, or a configuration reference: the embed is granted through the same
+  human partner review as an API key. Recorded as documented-but-unpublished rather than as a
+  library a developer can install today.
+component_count: 1
+families:
+  - name: Hosted dream interpreter embed
+    kind: hosted embed
+    status: documented; access by partner review
+    docs: https://mydreamthreads.xyz/dream-interpretation-api#request-access
+    distribution: single script tag hosted by DreamThreads (loader URL not published)
+    loader_library: null
+    version: null
+    auth:
+      mechanism: short-lived, origin-bound token issued to an approved domain
+      partner_key_in_browser: false
+    capabilities:
+      - DreamThreads-hosted responsive interpretation UI
+      - Visible DreamThreads attribution
+      - Completion and referral measurement
+      - Fastest publication integration path (no server work)
+    intended_for: publishers embedding an attributed interpreter inside editorial pages
+    tradeoff: >-
+      The provider frames it against the REST path explicitly — REST means "own the interface" with a
+      server-side long-lived key; the embed means DreamThreads owns the UI and the token is
+      origin-bound and short-lived.
+gaps:
+  - No public loader URL, script snippet, element/attribute reference or theming API.
+  - No versioning or CDN pin for the embed bundle, so a consumer cannot tell what build they load.

@@ -1,0 +1,28 @@
+generated: '2026-08-14'
+method: generated
+source: >-
+  Authored from the verified DreamGraph OpenAPI operationIds and the live MCP tools/list response.
+  No provider-published AGENTS.md or skill package exists — searched the site, llms.txt, apis.json
+  and the GitHub developer toolkit.
+skills:
+  - file: dreamthreads-parse-a-dream-keyless.md
+    name: Parse a dream without a key
+    description: >-
+      Structured extraction from one dream narrative through the free, keyless public parser, with
+      the rate-limit and RFC 9457 error handling an agent needs.
+    api: openapi/dreamthreads-dreamgraph-openapi.yml
+    operations: [parseDreamPublicly, getDreamGraphHealth]
+  - file: dreamthreads-interpret-a-dream-partner.md
+    name: Generate a reflective dream interpretation (partner key)
+    description: >-
+      The reviewed-partner path — bearer auth, context-aware interpretation with a factor trace, the
+      keyed parse variant, and the provider's non-negotiable output rules.
+    api: openapi/dreamthreads-dreamgraph-openapi.yml
+    operations: [interpretDream, parseDream, getDreamGraphHealth]
+  - file: dreamthreads-connect-the-mcp-server.md
+    name: Connect an agent to the DreamThreads MCP server
+    description: >-
+      Attach an MCP client to the keyless Streamable HTTP server and use parse_dream and
+      search_dream_concepts, including the MCP-only concept search that has no REST equivalent.
+    api: mcp/dreamthreads-mcp.yml
+    operations: [parse_dream, search_dream_concepts]

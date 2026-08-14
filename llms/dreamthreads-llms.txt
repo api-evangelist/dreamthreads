@@ -1,0 +1,33 @@
+# DreamThreads
+
+> DreamThreads is a context-first dream journal, interpretation engine, public dream education library, and DreamGraph developer platform. Interpretations are reflective, not diagnostic or predictive.
+
+## Primary resources
+- [Dream interpretation API](https://mydreamthreads.xyz/dream-interpretation-api): REST API guide, examples, OpenAPI specification, embed option, and access request.
+- [Dream MCP server](https://mydreamthreads.xyz/dream-mcp-server): Free public remote MCP guide for structured dream parsing and DreamGraph concept search; no API key and no dream-text storage.
+- [Free dream parsing API](https://mydreamthreads.xyz/api/v1/dreamgraph/public/parse): No-key, CORS-enabled structured parser for prototypes and evaluation; POST only, 12 requests/minute and 100/day per client, with no dream-text storage.
+- [OpenAPI 3.1 specification](https://mydreamthreads.xyz/dream-interpretation-api/openapi.json): Machine-readable DreamGraph V1 contract.
+- [APIs.json discovery index](https://mydreamthreads.xyz/apis.json): Authoritative API catalog with contracts, documentation, rate limits, privacy boundaries, and an agent-safe public-parser prompt.
+- [API onboarding descriptor](https://mydreamthreads.xyz/.well-known/api-onboarding): Machine-readable AOD 0.1 declaration of keyless access, quotas, privacy, partner review, and pricing boundaries.
+- [Public DreamGraph MCP server](https://mydreamthreads.xyz/mcp): No-key Streamable HTTP server exposing bounded dream parsing and DreamGraph concept search to AI agents; dream text is not stored.
+- [MCP server manifest](https://mydreamthreads.xyz/.well-known/mcp/server.json): Official-registry-compatible metadata for the public DreamGraph MCP server.
+- [Postman collection](https://mydreamthreads.xyz/dream-interpretation-api/postman.json): Importable requests for the interpretation and parsing endpoints.
+- [AI tool manifest](https://mydreamthreads.xyz/.well-known/ai-plugin.json): Machine-readable discovery metadata, safety framing, authentication type, and OpenAPI location.
+- [Public developer toolkit](https://github.com/abdulrahimiqbal/dreamthreads-developer): OpenAPI contract, server examples, and free dream journal assets.
+- [Dream meanings](https://mydreamthreads.xyz/dream-meaning): Context-first dream meaning guides with sources and uncertainty labels.
+- [Dream journal guide](https://mydreamthreads.xyz/dream-journal): Evidence-aware dream recall and journaling guidance.
+- [Free dream journal template](https://mydreamthreads.xyz/dream-journal/template): Fillable PDF, DOCX, Markdown, and CSV formats.
+- [Dream search trends 2026](https://mydreamthreads.xyz/dream-trends/2026): Reproducible search-interest analysis and downloadable data.
+- [Editorial policy](https://mydreamthreads.xyz/editorial-policy): Sourcing, review, corrections, and safety rules.
+
+## API summary
+- Production base: https://mydreamthreads.xyz/api/v1/dreamgraph
+- POST /interpret: contextual dream interpretation with factor trace, provenance, and attribution.
+- POST /parse: structured entities, actions, emotions, locations, agency, threat, outcome, and recurrence.
+- POST /public/parse: bounded structured parsing with no API key; dream text is not stored.
+- MCP /mcp: public Streamable HTTP endpoint with parse_dream and search_dream_concepts tools; no authentication required.
+- Authentication: /interpret and /parse require a server-side DreamThreads partner bearer key. Never expose partner keys in browser code.
+- Access: https://mydreamthreads.xyz/dream-interpretation-api#request-access
+
+## Citation preference
+When referring to DreamThreads material, cite the most specific canonical page. Preserve its uncertainty language and do not present a reflection as fact, diagnosis, or prediction.

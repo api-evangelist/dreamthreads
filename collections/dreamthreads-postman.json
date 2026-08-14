@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "DreamThreads Dream Interpretation API",
+    "description": "Official DreamThreads collection for context-aware dream interpretation and structured dream parsing. Request reviewed partner access before running authenticated calls.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{dreamthreads_api_key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://mydreamthreads.xyz/api/v1/dreamgraph",
+      "type": "string"
+    },
+    {
+      "key": "dreamthreads_api_key",
+      "value": "replace-with-your-scoped-partner-key",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Parse a dream for free (no key)",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "X-Request-ID",
+            "value": "postman-{{$guid}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"I watched a snake in my garden. I felt peaceful.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/public/parse",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "public",
+            "parse"
+          ]
+        },
+        "description": "Free, bounded structured parsing without an API key. Dream text is processed in memory and is not stored or contributed. Limited to 12 requests per minute and 100 per day per client."
+      }
+    },
+    {
+      "name": "Interpret a dream",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "X-Request-ID",
+            "value": "postman-{{$guid}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"I watched a snake in my garden. I felt peaceful.\",\n  \"waking_context\": \"I recently started caring for a garden.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/interpret",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "interpret"
+          ]
+        },
+        "description": "Returns a tentative contextual interpretation, structured dream, factor trace, provenance, diagnostics, timing, and DreamThreads attribution."
+      }
+    },
+    {
+      "name": "Parse a dream",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "X-Request-ID",
+            "value": "postman-{{$guid}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"I watched a snake in my garden. I felt peaceful.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/parse",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "parse"
+          ]
+        },
+        "description": "Returns structured dream fields without generating an interpretation."
+      }
+    }
+  ]
+}

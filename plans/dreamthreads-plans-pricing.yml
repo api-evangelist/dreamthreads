@@ -1,0 +1,67 @@
+generated: '2026-08-14'
+method: probed
+source: https://mydreamthreads.xyz/.well-known/api-onboarding
+docs: https://mydreamthreads.xyz/dream-interpretation-api#request-access
+note: >-
+  Read from the provider's machine-readable AOD 0.1 onboarding descriptor, which carries an
+  economics.plans[] block — not scraped from a marketing page. The consumer subscription at
+  https://mydreamthreads.xyz/pricing ("DreamThreads Pro", $30/year) is the JOURNAL APP, a different
+  product from API access, and is recorded separately below so it is not mistaken for an API plan.
+model: free public access with reviewed partner access
+plan_count: 2
+plans:
+  - name: Public
+    price: 0
+    currency: USD
+    free: true
+    billing_period: null
+    authentication: none
+    included:
+      - Structured dream parsing (POST /public/parse, keyless, CORS *)
+      - DreamGraph concept search via the public MCP server
+      - OpenAPI 3.1 contract, Postman collection, llms.txt, apis.json
+      - Liveness endpoint (GET /health)
+    limits:
+      rest_requests_per_minute_per_client: 12
+      rest_requests_per_day_per_client: 100
+      mcp_protocol_requests_per_minute_per_client: 60
+      max_characters_per_dream: 6000
+    overage: none — requests beyond the window return 429 rate_limit_exceeded
+    privacy:
+      dream_text_stored: false
+      contribution_created: false
+  - name: Reviewed partner
+    price: null
+    currency: null
+    free: false
+    billing_period: null
+    authentication: bearer API key (issued after human review)
+    included:
+      - Context-aware interpretation (POST /interpret)
+      - Keyed structured parsing with waking/physiological context (POST /parse)
+      - Higher-volume access
+      - Hosted embed with short-lived origin-bound tokens
+      - Production integration support
+    limits:
+      note: Partner quotas are scoped during review and are not published.
+    overage: not published
+    request_url: https://mydreamthreads.xyz/dream-interpretation-api#request-access
+    pricing_note: >-
+      "Partner pricing is scoped during review and is not yet standardized publicly" — the provider's
+      own AOD descriptor lists this as a self-declared gap.
+gaps:
+  - Partner pricing is scoped during review rather than published as a standardized rate card.
+adjacent_consumer_product:
+  name: DreamThreads Pro
+  url: https://mydreamthreads.xyz/pricing
+  price: 30
+  currency: USD
+  billing_period: year
+  note: >-
+    Consumer dream-journal subscription ($2.50/mo billed yearly; monthly and lifetime tiers also
+    offered). NOT an API plan — no API entitlement attaches to it.
+x-evidence:
+  fetched: '2026-08-14'
+  url: https://mydreamthreads.xyz/.well-known/api-onboarding
+  http_status: 200
+  content_type: application/json

@@ -1,0 +1,83 @@
+generated: '2026-08-14'
+method: probed
+source: https://mydreamthreads.xyz/api/v1/dreamgraph/public/parse
+docs:
+  - https://mydreamthreads.xyz/dream-interpretation-api
+  - https://mydreamthreads.xyz/.well-known/api-onboarding
+note: >-
+  Limits are published in three places that agree: the developer guide, the AOD 0.1 onboarding
+  descriptor, and the OpenAPI response headers. The header values below were OBSERVED on a live
+  anonymous POST to the keyless public parser on 2026-08-14, not read from the docs.
+limit_count: 3
+limits:
+  - name: Public parser — per-minute
+    scope: per-client
+    endpoint: POST /api/v1/dreamgraph/public/parse
+    window: 1 minute
+    limit: 12
+    burst: null
+    auth: none
+    observed: true
+  - name: Public parser — per-day
+    scope: per-client
+    endpoint: POST /api/v1/dreamgraph/public/parse
+    window: 1 day
+    limit: 100
+    burst: null
+    auth: none
+    observed: false
+    note: Published in the docs and the AOD descriptor; not observable from a single response.
+  - name: Public MCP server — protocol requests
+    scope: per-client
+    endpoint: https://mydreamthreads.xyz/mcp
+    window: 1 minute
+    limit: 60
+    burst: null
+    auth: none
+    observed: false
+  - name: Reviewed partner endpoints
+    scope: per-key
+    endpoint: POST /api/v1/dreamgraph/interpret, POST /api/v1/dreamgraph/parse
+    window: null
+    limit: null
+    auth: bearer
+    observed: false
+    note: >-
+      Partner quotas are scoped during review and are not published. The 429 problem type exists for
+      these operations, so a quota is enforced; its value is not disclosed.
+payload_limits:
+  max_characters_per_dream: 6000
+response_headers:
+  observed:
+    - ratelimit-limit
+    - ratelimit-remaining
+    - ratelimit-reset
+    - x-ratelimit-limit
+    - x-ratelimit-remaining
+    - x-ratelimit-reset
+    - x-request-id
+  documented_in_openapi:
+    - RateLimit-Limit
+    - RateLimit-Remaining
+    - RateLimit-Reset
+  retry_after: false
+  note: >-
+    Both the draft-standard RateLimit-* trio and the legacy X-RateLimit-* trio are emitted, and both
+    are named in access-control-expose-headers so browser clients can read them. RateLimit-Reset is a
+    unix timestamp in seconds. No Retry-After header is documented or observed.
+exhaustion:
+  status: 429
+  media_type: application/problem+json
+  error_code: rate_limit_exceeded
+  problem_type: https://mydreamthreads.xyz/problems/rate_limit_exceeded
+  see_also: errors/dreamthreads-problem-types.yml
+x-evidence:
+  fetched: '2026-08-14'
+  url: https://mydreamthreads.xyz/api/v1/dreamgraph/public/parse
+  http_status: 200
+  headers_seen:
+    ratelimit-limit: '12'
+    ratelimit-remaining: '11'
+    ratelimit-reset: '1786736940'
+    access-control-allow-origin: '*'
+    cache-control: no-store

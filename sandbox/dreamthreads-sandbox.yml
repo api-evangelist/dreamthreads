@@ -1,0 +1,66 @@
+generated: '2026-08-14'
+method: searched
+source: https://mydreamthreads.xyz/dream-interpretation-api
+note: >-
+  DreamThreads has NO test-vs-live key separation, no test-mode key prefix and no fixture tooling —
+  there is one production environment. What it does publish, and frames explicitly as the evaluation
+  surface, is a keyless production endpoint plus a keyless MCP server that anyone can call before
+  requesting partner access. Recorded here as the sandbox-equivalent with that limitation stated,
+  not as a test environment it does not have.
+test_live_separation:
+  modes: none
+  key_prefixes: none
+  note: A reviewed partner key is a live key; there is no test key to issue.
+evaluation_surfaces:
+  - name: Keyless public parser
+    endpoint: POST https://mydreamthreads.xyz/api/v1/dreamgraph/public/parse
+    auth: none
+    cors: '*'
+    intended_for: prototypes, classrooms, evaluations, low-volume tools
+    limits: 12 requests/minute, 100/day per client, 6,000 characters per dream
+    data_boundary: dream text processed in memory; not stored, no contribution created
+    verified: probed 2026-08-14, HTTP 200
+  - name: Keyless liveness endpoint
+    endpoint: GET https://mydreamthreads.xyz/api/v1/dreamgraph/health
+    auth: none
+    intended_for: integration tests and connectivity diagnostics
+    caveat: >-
+      Provider states plainly that a 200 confirms edge reachability only — it does not validate a
+      partner key or guarantee the upstream interpretation model is available.
+    verified: probed 2026-08-14, HTTP 200
+  - name: Public MCP server
+    endpoint: https://mydreamthreads.xyz/mcp
+    auth: none
+    transport: streamable-http
+    intended_for: agent clients evaluating parse_dream and search_dream_concepts
+    limits: 60 protocol requests/minute per client
+    verified: probed 2026-08-14, tools/list HTTP 200
+published_test_values:
+  note: Verbatim from the provider's own docs, OpenAPI examples and AOD descriptor. Not invented.
+  dream_narratives:
+    - "I watched a snake in my garden. I felt peaceful."
+    - "I watched a blue bird fly over a quiet lake."
+  waking_context: "I recently started caring for a garden."
+  request_ids:
+    - your-request-123
+    - example-request-123
+    - public-request-123
+    - partner-request-123
+    - health-request-123
+  concept_search_queries: [snake, falling, ex partner, unable to move]
+  api_key_placeholder: $DREAMTHREADS_API_KEY   # environment variable name used in every provider example
+runnable_examples:
+  - examples/dreamthreads-example-public-curl.sh   # keyless — runs with no credentials
+  - examples/dreamthreads-example-curl.sh
+  - examples/dreamthreads-example-javascript.mjs
+  - examples/dreamthreads-example-python.py
+  - collections/dreamthreads-postman.json
+console:
+  interactive_try_it: false
+  reference_renderer: https://abdulrahimiqbal.github.io/dreamthreads-developer/
+  note: >-
+    The hosted API reference is Redoc, which renders the contract but does not execute requests. The
+    Postman collection is the closest thing to an executable console.
+gaps:
+  - No sandbox environment, test keys, or mock data server.
+  - No way to exercise interpretDream or the keyed parseDream without a reviewed partner key.

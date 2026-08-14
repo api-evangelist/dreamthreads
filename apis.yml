@@ -4,8 +4,9 @@ description: >-
   offers a keyless public dream parser, gated partner interpretation endpoints, a hosted MCP server, and full
   machine-readable contracts. Interpretations are framed as reflective, not diagnostic or predictive.
 url: https://dreamthreads.apievangelist.com/apis.yml
+image: https://mydreamthreads.xyz/opengraph-image
 created: '2026-08-13'
-modified: '2026-08-13'
+modified: '2026-08-14'
 specificationVersion: '0.21'
 tags:
   - dream analysis
@@ -18,7 +19,8 @@ tags:
   - wellness / sleep
   - research tooling
 apis:
-  - name: DreamGraph API
+  - aid: dreamthreads:dreamgraph-api
+    name: DreamGraph API
     description: >-
       REST API for dream text parsing and interpretation. Includes a keyless public parser and liveness endpoint, plus
       gated partner endpoints for structured parsing and reflective interpretation. Also exposes a hosted MCP server,
@@ -37,22 +39,139 @@ apis:
       - research tooling
     properties:
       - type: OpenAPI
+        name: DreamGraph V1 OpenAPI 3.1 contract (live)
         url: https://mydreamthreads.xyz/dream-interpretation-api/openapi.json
+      - type: OpenAPI
+        name: DreamGraph V1 OpenAPI 3.1 contract (refined)
+        url: openapi/dreamthreads-dreamgraph-openapi.yml
       - type: PostmanCollection
         url: https://mydreamthreads.xyz/dream-interpretation-api/postman.json
       - type: MCPServer
         url: https://mydreamthreads.xyz/mcp
+      - type: MCPServer
+        name: DreamGraph MCP server manifest
+        url: mcp/dreamthreads-mcp.yml
+      - type: ToolCrosswalk
+        name: MCP tool to REST operation crosswalk
+        url: mcp/dreamthreads-tool-crosswalk.yml
       - type: LLMsTxt
         url: https://mydreamthreads.xyz/llms.txt
       - type: Documentation
         url: https://mydreamthreads.xyz/dream-interpretation-api
       - type: Documentation
         url: https://abdulrahimiqbal.github.io/dreamthreads-developer/
+      - type: Overlay
+        name: API Evangelist enhancements overlay
+        url: overlays/dreamthreads-dreamgraph-overlay.yaml
+      - type: ErrorCatalog
+        name: RFC 9457 problem types
+        url: errors/dreamthreads-problem-types.yml
+      - type: DataModel
+        name: DreamGraph document model
+        url: data-model/dreamthreads-data-model.yml
+      - type: Examples
+        name: First-party runnable examples
+        url: examples/_index.yml
 maintainers:
   - FN: Rahim Iqbal
+    email: rahim@mydreamthreads.xyz
     url: mailto:rahim@mydreamthreads.xyz
   - FN: DreamThreads Support
+    email: ariqbal@mun.ca
     url: mailto:ariqbal@mun.ca
+common:
+  - type: DeveloperPortal
+    name: DreamGraph developer portal
+    url: https://mydreamthreads.xyz/dream-interpretation-api
+  - type: Documentation
+    name: Dream interpretation API guide
+    url: https://mydreamthreads.xyz/dream-interpretation-api
+  - type: APIReference
+    name: Interactive Redoc API reference
+    url: https://abdulrahimiqbal.github.io/dreamthreads-developer/
+  - type: GettingStarted
+    name: No-key parser quickstart
+    url: https://mydreamthreads.xyz/dream-interpretation-api#free-parser
+  - type: Support
+    name: DreamThreads API support (email; declared in the provider's AOD descriptor)
+    url: mailto:ariqbal@mun.ca
+  - type: GitHub
+    name: Public developer toolkit repository (personal account; no GitHub organization exists)
+    url: https://github.com/abdulrahimiqbal/dreamthreads-developer
+  - type: Pricing
+    name: API access and pricing surface (partner pricing scoped during review, not published)
+    url: https://mydreamthreads.xyz/dream-interpretation-api#request-access
+  - type: Pricing
+    name: DreamThreads Pro consumer subscription pricing (journal app, not an API plan)
+    url: https://mydreamthreads.xyz/pricing
+  - type: SignUp
+    name: Request reviewed partner API access
+    url: https://mydreamthreads.xyz/dream-interpretation-api#request-access
+  - type: TermsOfService
+    url: https://mydreamthreads.xyz/terms
+  - type: PrivacyPolicy
+    url: https://mydreamthreads.xyz/privacy
+  - type: Postman
+    name: DreamGraph Postman collection (v2.1.0)
+    url: collections/dreamthreads-postman.json
+  - type: APIsJSON
+    name: Provider-published APIs.json 0.21 discovery index
+    url: https://mydreamthreads.xyz/apis.json
+  - type: MCPServer
+    name: Public DreamGraph MCP server (streamable-http, keyless)
+    url: https://mydreamthreads.xyz/mcp
+  - type: LLMsTxt
+    url: llms/dreamthreads-llms.txt
+  - type: WellKnown
+    name: /.well-known probe (ai-plugin.json, mcp/server.json, api-onboarding all 200)
+    url: well-known/dreamthreads-well-known.yml
+  - type: Authentication
+    url: authentication/dreamthreads-authentication.yml
+  - type: Conventions
+    url: conventions/dreamthreads-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/dreamthreads-lifecycle.yml
+  - type: Conformance
+    url: conformance/dreamthreads-conformance.yml
+  - type: DomainSecurity
+    url: security/dreamthreads-domain-security.yml
+  - type: VulnerabilityDisclosure
+    url: security/dreamthreads-vulnerability-disclosure.yml
+  - type: Security
+    name: Vulnerability disclosure policy (SECURITY.md in the first-party developer toolkit)
+    url: https://github.com/abdulrahimiqbal/dreamthreads-developer/blob/main/SECURITY.md
+  - type: RateLimits
+    url: rate-limits/dreamthreads-rate-limits.yml
+  - type: Plans
+    url: plans/dreamthreads-plans-pricing.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: AgenticAccess
+    url: agentic-access/dreamthreads-agentic-access.yml
+  - type: Vocabulary
+    name: DreamGraph concept vocabulary (49 concepts, 9 types, harvested via MCP)
+    url: vocabulary/dreamthreads-dreamgraph-vocabulary.yml
+  - type: JSONSchema
+    name: Verbatim MCP tool JSON Schema 2020-12 documents
+    url: json-schema/_index.yml
+  - type: Components
+    name: Hosted interpreter embed (documented; access by partner review)
+    url: components/dreamthreads-components.yml
+  - type: ErrorCatalog
+    url: errors/dreamthreads-problem-types.yml
+  - type: DataModel
+    url: data-model/dreamthreads-data-model.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Overlay
+    url: overlays/dreamthreads-dreamgraph-overlay.yaml
+  - type: ToolCrosswalk
+    url: mcp/dreamthreads-tool-crosswalk.yml
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 6
+  pass: local-v1
 generated:
   by: apis.io/add
   model: claude-opus-4-8

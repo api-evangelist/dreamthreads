@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "structured_dream": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {}
+    },
+    "privacy": {
+      "type": "object",
+      "properties": {
+        "dream_text_stored": {
+          "type": "boolean",
+          "const": false
+        },
+        "contribution_created": {
+          "type": "boolean",
+          "const": false
+        }
+      },
+      "required": [
+        "dream_text_stored",
+        "contribution_created"
+      ],
+      "additionalProperties": false
+    },
+    "attribution": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "const": "DreamThreads"
+        },
+        "methodology_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "provider",
+        "methodology_url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "structured_dream",
+    "privacy",
+    "attribution"
+  ],
+  "additionalProperties": false
+}

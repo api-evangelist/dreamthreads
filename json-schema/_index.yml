@@ -1,0 +1,36 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  Extracted VERBATIM from the DreamThreads MCP server's own anonymous tools/list response
+  (https://mydreamthreads.xyz/mcp, HTTP 200, saved at mcp/dreamthreads-mcp-tools-list.json). Each
+  file is the provider's schema object exactly as returned — no field was added, renamed or inferred.
+note: >-
+  These are the only self-describing JSON Schema documents DreamThreads publishes. The OpenAPI 3.1
+  contract carries nine component schemas, but its StructuredDream payload is modelled as a loose
+  object (additionalProperties, one enum in the whole document), whereas the MCP outputSchemas pin
+  the privacy and attribution blocks with const values — dream_text_stored const false,
+  contribution_created const false, provider const DreamThreads. The strongest machine-readable
+  guarantee this provider makes is on the MCP surface, not the REST one.
+dialect: https://json-schema.org/draft/2020-12/schema
+schema_count: 4
+schemas:
+  - file: dreamthreads-mcp-parse-dream-input.schema.json
+    tool: parse_dream
+    kind: input
+    dialect: https://json-schema.org/draft/2020-12/schema
+    source: 'mcp/dreamthreads-mcp-tools-list.json#/result/tools[name=parse_dream]/inputSchema'
+  - file: dreamthreads-mcp-parse-dream-output.schema.json
+    tool: parse_dream
+    kind: output
+    dialect: https://json-schema.org/draft/2020-12/schema
+    source: 'mcp/dreamthreads-mcp-tools-list.json#/result/tools[name=parse_dream]/outputSchema'
+  - file: dreamthreads-mcp-search-dream-concepts-input.schema.json
+    tool: search_dream_concepts
+    kind: input
+    dialect: https://json-schema.org/draft/2020-12/schema
+    source: 'mcp/dreamthreads-mcp-tools-list.json#/result/tools[name=search_dream_concepts]/inputSchema'
+  - file: dreamthreads-mcp-search-dream-concepts-output.schema.json
+    tool: search_dream_concepts
+    kind: output
+    dialect: https://json-schema.org/draft/2020-12/schema
+    source: 'mcp/dreamthreads-mcp-tools-list.json#/result/tools[name=search_dream_concepts]/outputSchema'

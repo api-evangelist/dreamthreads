@@ -1,0 +1,105 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/_original/dreamthreads-dreamgraph-openapi.json
+searched: https://mydreamthreads.xyz/dream-interpretation-api
+note: >-
+  DreamGraph has no persisted, addressable resources — there are no ids, no GET-by-id operations and
+  no collections. Every operation is a stateless transform of one dream narrative into a structured
+  document, and the provider states dream text on the public path is processed in memory and never
+  stored. The "data model" is therefore a DOCUMENT graph (request -> envelope -> analysis document),
+  not an entity graph with foreign keys. Recording it that way is the honest derivation; inventing
+  has_many relationships between analytic sub-objects would misrepresent the API.
+persistence: none (stateless analysis; no resource identifiers, no CRUD)
+entities:
+  - name: Envelope
+    kind: envelope
+    schemas: [HealthResponse, InterpretResponse, ParseResponse, PublicParseResponse]
+    fields: [data, request_id, version]
+    note: Common success wrapper on every 2xx response.
+  - name: Problem
+    kind: envelope
+    schemas: [Error]
+    fields: [type, title, status, detail, instance, error, request_id, version]
+    note: RFC 9457 problem document; see errors/dreamthreads-problem-types.yml.
+  - name: DreamNarrative
+    kind: input
+    schemas: [InterpretRequest, ParseRequest, PublicParseRequest]
+    fields: [text, lens, waking_context, physiological_context, recurrence]
+    constraints:
+      text: UTF-8, 1-6000 characters, required
+    note: >-
+      Three request shapes over one concept. PublicParseRequest is the narrowest (text + recurrence);
+      ParseRequest adds waking and physiological context; InterpretRequest adds an interpretive `lens`.
+  - name: StructuredDream
+    kind: analysis document
+    schema_version: structured-dream-v1
+    produced_by: [parseDreamPublicly, parseDream]
+    facets:
+      - entities
+      - actors
+      - locations
+      - actions          # {type, confidence}
+      - emotions         # {label, valence, intensity, explicitlyNegated}
+      - agency           # {level, mode, evidence}
+      - threat           # {present, level, basis}
+      - outcome          # {status, valence}
+      - sensory
+      - recurrence       # {known, frequency}
+      - wakingContext    # {supplied}
+      - physiologicalContext # {supplied, cues}
+      - unknownConcepts
+    versioning_fields: [schemaVersion, parserVersion, dreamGraphVersion]
+  - name: Interpretation
+    kind: analysis document
+    produced_by: [interpretDream]
+    required_fields: [essence, symbols, reading, question, reasonTrace, provenance]
+    versioning_fields: [dreamgraphVersion, parserVersion, engineVersion]
+    note: >-
+      reasonTrace is the distinguishing member — an array of {factor, value, effect} rows showing
+      which parsed factors moved the reading. provenance carries typed claims when reviewed material
+      was used.
+  - name: DreamGraphConcept
+    kind: vocabulary record
+    produced_by: [mcp:search_dream_concepts]
+    fields: [id, slug, name, type, description, url]
+    note: >-
+      The only record type in the system with a stable identifier — and it is reachable ONLY through
+      the MCP surface, not through REST. See mcp/dreamthreads-tool-crosswalk.yml (mcp_only).
+  - name: Privacy
+    kind: assertion
+    fields: [dream_text_stored, contribution_created]
+    note: Both constants are false on the public parser and MCP tools; returned on every response.
+  - name: Attribution
+    kind: assertion
+    fields: [provider, deep_link, methodology_url]
+    note: Integrations are contractually expected to preserve this.
+relationships:
+  - from: Envelope
+    to: StructuredDream
+    type: has_one
+    via: data.structured_dream
+  - from: Envelope
+    to: Interpretation
+    type: has_one
+    via: data.interpretation
+  - from: Envelope
+    to: Privacy
+    type: has_one
+    via: data.privacy
+  - from: Envelope
+    to: Attribution
+    type: has_one
+    via: data.attribution
+  - from: Interpretation
+    to: StructuredDream
+    type: derived_from
+    via: reasonTrace factors reference parsed facets (emotion, action, agency, threat, outcome)
+  - from: StructuredDream
+    to: DreamGraphConcept
+    type: references
+    via: unknownConcepts / concept vocabulary lookup (MCP-only)
+  - from: Problem
+    to: Envelope
+    type: replaces
+    via: 4xx/5xx responses substitute the problem document for the success envelope
+id_prefixes: []

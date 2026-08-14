@@ -1,0 +1,59 @@
+generated: '2026-08-14'
+method: searched
+source: https://mydreamthreads.xyz/.well-known/
+host: https://mydreamthreads.xyz
+note: >-
+  Probed against the single host that serves both the website and the DreamGraph API base
+  (https://mydreamthreads.xyz/api/v1/dreamgraph). The site is a Next.js app that answers unknown
+  /.well-known/* paths with an HTML 404 page — the 404 rows below are real 404 status codes, not
+  soft-200 HTML shells. Three real machine-readable documents are served: an OpenAI-style plugin
+  manifest, an MCP registry server manifest, and an AOD 0.1 API onboarding descriptor. There is no
+  security.txt and no OAuth/OIDC discovery (the API is bearer-key only, so RFC 8414 does not apply).
+documents:
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: application/json
+    file: dreamthreads-ai-plugin.json
+    note: OpenAI plugin manifest v1; points at the canonical OpenAPI and carries the safety framing.
+  - path: /.well-known/mcp/server.json
+    status: 200
+    content_type: application/json
+    file: dreamthreads-mcp-server.json
+    note: >-
+      MCP official-registry server manifest (schema 2025-12-11) naming the remote streamable-http
+      endpoint https://mydreamthreads.xyz/mcp.
+  - path: /.well-known/api-onboarding
+    status: 200
+    content_type: application/json
+    file: dreamthreads-api-onboarding.json
+    note: >-
+      AOD 0.1 API Onboarding Descriptor — machine-readable access mechanisms, authentication methods,
+      credentials, quotas, plans, privacy boundary and support contacts.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+adjacent:
+  - path: /apis.json
+    status: 200
+    content_type: application/json
+    file: dreamthreads-apis-json.json
+    note: >-
+      Provider-published APIs.json 0.21 discovery index (aid mydreamthreads.xyz:dreamgraph). Served at
+      the domain root rather than /.well-known/api-catalog.
+  - path: /llms.txt
+    status: 200
+    file: ../llms/dreamthreads-llms.txt
+x-evidence:
+  fetched: '2026-08-14'
+  probe: curl -sS -o /dev/null -w '%{http_code}' -L <url>

@@ -1,0 +1,70 @@
+generated: '2026-08-14'
+method: searched
+status: published
+source: https://mydreamthreads.xyz/.well-known/mcp/server.json
+docs: https://mydreamthreads.xyz/dream-mcp-server
+deployment:
+  mode: remote
+  endpoint: https://mydreamthreads.xyz/mcp
+  auth: none
+  verified: probed
+  note: >-
+    tools/list returned HTTP 200 anonymously over Streamable HTTP on 2026-08-14 with two tools and
+    full JSON Schema inputSchema/outputSchema for each. No stdio package is published — there is no
+    npx/pip install path, so this is a remote-only agent surface.
+server:
+  name: io.github.abdulrahimiqbal/dreamthreads
+  title: DreamThreads DreamGraph
+  version: 1.0.1
+  transport: streamable-http
+  url: https://mydreamthreads.xyz/mcp
+  registry_manifest: well-known/dreamthreads-mcp-server.json
+  description: >-
+    Parse dreams into structured context and search DreamGraph concepts without storing dream text.
+  rate_limit: 60 protocol requests per minute per client
+  privacy:
+    dream_text_stored: false
+    contribution_created: false
+tools:
+  - name: parse_dream
+    title: Parse dream context
+    description: >-
+      Extract structured entities, actions, emotions, agency, threat, outcome, sensory cues, and
+      recurrence from one dream narrative. Bounded: no fixed meaning, diagnosis or prediction, and
+      no dream text storage.
+    input_schema:
+      required: [text]
+      properties:
+        text: string, 1-6000 characters
+        recurrence: optional boolean or string (max 80 chars)
+    annotations:
+      readOnlyHint: true
+      destructiveHint: false
+      idempotentHint: true
+      openWorldHint: false
+    source_operation: openapi/dreamthreads-dreamgraph-openapi.yml#parseDreamPublicly
+  - name: search_dream_concepts
+    title: Search DreamGraph concepts
+    description: >-
+      Search DreamGraph's stable, context-first vocabulary for a dream element or experience.
+      Results are descriptive concepts, not universal symbolic definitions.
+    input_schema:
+      required: [query]
+      properties:
+        query: string, 2-100 characters
+        limit: integer 1-12, default 8
+    annotations:
+      readOnlyHint: true
+      destructiveHint: false
+      idempotentHint: true
+      openWorldHint: false
+    source_operation: null
+    note: No public REST operation backs this tool — see mcp/dreamthreads-tool-crosswalk.yml.
+raw_tools_list: mcp/dreamthreads-mcp-tools-list.json
+x-evidence:
+  fetched: '2026-08-14'
+  url: https://mydreamthreads.xyz/mcp
+  method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 200
+  content_type: text/event-stream
+  tools_returned: 2

@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "query": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "description": "A dream element or experience, such as snake, falling, ex partner, or unable to move."
+    },
+    "limit": {
+      "default": 8,
+      "description": "Maximum number of matching concepts.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 12
+    }
+  },
+  "required": [
+    "query"
+  ]
+}

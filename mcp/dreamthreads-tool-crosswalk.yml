@@ -1,0 +1,59 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  Derived by aligning the LIVE MCP tool list (anonymous tools/list, HTTP 200, saved verbatim to
+  mcp/dreamthreads-mcp-tools-list.json) with the live OpenAPI 3.1 contract at
+  openapi/_original/dreamthreads-dreamgraph-openapi.json (4 operations).
+purpose: >-
+  Bind each agent-facing MCP tool to the REST operation that backs it, so a tool inherits a real
+  inputSchema instead of a guessed one — and record where the two surfaces diverge. DreamThreads is
+  a rare case where BOTH surfaces are anonymously introspectable, so every confidence below rests on
+  two fetched schemas rather than on name matching.
+surfaces:
+  rest_openapi: openapi/dreamthreads-dreamgraph-openapi.yml   # 4 operations, 9 schemas, OpenAPI 3.1.0, not gated
+  graphql: null                                               # no GraphQL surface published (/graphql -> 404)
+  mcp: https://mydreamthreads.xyz/mcp                         # streamable-http, tools/list ANONYMOUS (not gated)
+crosswalk:
+  - tool: parse_dream
+    category: parsing
+    rest: [parseDreamPublicly]
+    binding: rest
+    confidence: high
+    note: >-
+      Both accept {text: 1-6000 chars} and the MCP outputSchema mirrors the PublicParseResponse
+      envelope (structured_dream + privacy + attribution). The MCP tool additionally accepts an
+      optional `recurrence` hint that the keyless REST body does not expose; the keyed parseDream
+      operation does accept recurrence context, so the tool sits between the two REST operations.
+  - tool: parse_dream
+    category: parsing
+    rest: [parseDream]
+    binding: rest
+    confidence: medium
+    note: >-
+      Secondary binding. parseDream is the reviewed-partner (bearer) variant and accepts the fuller
+      waking/physiological/recurrence context; the MCP tool is keyless and bounded, so it cannot be
+      a full projection of parseDream.
+mcp_only:
+  - tool: search_dream_concepts
+    reason: >-
+      DreamGraph concept/vocabulary search has no published REST operation. The OpenAPI exposes only
+      health, public/parse, parse and interpret; concept lookup is reachable through MCP and through
+      the human dream-meaning library (https://mydreamthreads.xyz/dream-meaning) but not through a
+      documented HTTP endpoint. A real MCP-only capability, not a gap in this crosswalk.
+rest_only:
+  - capability: interpretation
+    operations: [interpretDream]
+    reason: >-
+      Context-aware reflective interpretation requires a reviewed partner bearer key and is
+      deliberately not exposed as an MCP tool — the public MCP server is bounded to non-generative
+      extraction and vocabulary search.
+  - capability: liveness
+    operations: [getDreamGraphHealth]
+    reason: Operational liveness check; no agent-facing tool equivalent.
+coverage:
+  tools_named: 2
+  tools_bound_to_rest: 1
+  mcp_only: 1
+  rest_operations_total: 4
+  rest_operations_with_a_tool: 2
+  rest_only_operations: 2

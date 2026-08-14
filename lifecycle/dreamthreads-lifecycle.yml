@@ -1,0 +1,51 @@
+generated: '2026-08-14'
+method: searched
+source: https://mydreamthreads.xyz/dream-interpretation-api
+versioning:
+  scheme: uri-path
+  current: v1
+  contract_version: 1.1.0
+  label: DreamGraph V1.1
+  envelope_version_field: version
+  base: https://mydreamthreads.xyz/api/v1/dreamgraph
+  docs: https://mydreamthreads.xyz/dream-interpretation-api
+  component_versions:
+    parserVersion: dream-parser-rules-v1.0.0
+    dreamGraphVersion: dreamgraph-v0.1.0
+    engineVersion: dreamgraph-interpretation-v1
+    structured_dream_schemaVersion: structured-dream-v1
+  note: >-
+    Unusually for an API this young, every response body carries the parser, graph and engine
+    versions that produced it, so a consumer can pin analysis reproducibility to a component version
+    rather than only to the URI version.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or sunset policy is published, and the OpenAPI declares no deprecated operations.
+    Searched the developer guide, the OpenAPI, the AOD onboarding descriptor and the GitHub toolkit
+    README — none names a versioning or deprecation commitment. An honest absence, not a miss.
+sla:
+  url: null
+  uptime_target: null
+  note: No SLA is published. Partner terms are scoped during review.
+status_page:
+  url: null
+  health_endpoint: https://mydreamthreads.xyz/api/v1/dreamgraph/health
+  note: >-
+    There is no hosted status page (https://mydreamthreads.xyz/status returns 404). The provider's own
+    AOD descriptor names the unauthenticated liveness endpoint GET /health as its `support.status`
+    surface. That is a machine-readable liveness check, not an incident-history status page, so no
+    StatusPage pointer is emitted.
+  probed:
+    - url: https://mydreamthreads.xyz/status
+      status: 404
+    - url: https://mydreamthreads.xyz/api/v1/dreamgraph/health
+      status: 200
+changelog:
+  url: null
+  note: >-
+    No dated changelog is published (https://mydreamthreads.xyz/changelog returns 404). The contract
+    is versioned (1.1.0) but change history is not surfaced.
+deprecated_operations: []

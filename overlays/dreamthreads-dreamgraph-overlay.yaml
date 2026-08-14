@@ -1,0 +1,69 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the DreamThreads DreamGraph API
+  version: 1.0.0
+extends: openapi/dreamthreads-dreamgraph-openapi.yml
+x-generated: '2026-08-14'
+x-method: generated
+x-source: >-
+  Enhancements derived from artifacts in this repo (mcp/, rate-limits/, errors/, conventions/,
+  well-known/, sandbox/). The harvested contract at openapi/_original/ is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: dreamthreads
+      x-apievangelist-profile: https://apis.io/provider/dreamthreads
+      x-apievangelist-harvested: '2026-08-14'
+      x-apievangelist-source: https://mydreamthreads.xyz/dream-interpretation-api/openapi.json
+  - target: $.info
+    update:
+      x-agent-surfaces:
+        mcp: https://mydreamthreads.xyz/mcp
+        mcp_transport: streamable-http
+        mcp_auth: none
+        llms_txt: https://mydreamthreads.xyz/llms.txt
+        apis_json: https://mydreamthreads.xyz/apis.json
+        ai_plugin: https://mydreamthreads.xyz/.well-known/ai-plugin.json
+        api_onboarding: https://mydreamthreads.xyz/.well-known/api-onboarding
+        agent_card: null
+  - target: $.info
+    update:
+      x-conventions:
+        success_envelope: '{ data, request_id, version }'
+        error_format: rfc9457
+        request_id_header: X-Request-ID
+        idempotency: not supported
+        pagination: not applicable
+        versioning: uri-path v1
+  - target: $.paths['/public/parse'].post
+    update:
+      x-rate-limit:
+        per_minute_per_client: 12
+        per_day_per_client: 100
+        headers: [RateLimit-Limit, RateLimit-Remaining, RateLimit-Reset, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+        reset_format: unix-seconds
+        observed: '2026-08-14'
+      x-mcp-tool: parse_dream
+      x-keyless: true
+      x-cors: '*'
+  - target: $.paths['/health'].get
+    update:
+      x-keyless: true
+      x-liveness-only: >-
+        A 200 confirms edge reachability; it does not validate a partner key or guarantee the
+        upstream interpretation model is available.
+  - target: $.paths['/interpret'].post
+    update:
+      x-access: reviewed-partner
+      x-request-access: https://mydreamthreads.xyz/dream-interpretation-api#request-access
+      x-output-policy: >-
+        Reflective only. Consumers must not present the output as diagnosis, prediction, supernatural
+        claim, or fixed symbolic meaning, and must preserve the returned attribution.
+  - target: $.paths['/parse'].post
+    update:
+      x-access: reviewed-partner
+      x-mcp-tool: parse_dream
+      x-request-access: https://mydreamthreads.xyz/dream-interpretation-api#request-access
+  - target: $.components.schemas.Error
+    update:
+      x-problem-catalog: errors/dreamthreads-problem-types.yml

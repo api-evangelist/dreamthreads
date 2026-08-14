@@ -1,0 +1,62 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  Searched npm (name + registry search), PyPI, and the provider's own developer toolkit repository
+  https://github.com/abdulrahimiqbal/dreamthreads-developer.
+package_count: 0
+official_sdk_count: 0
+packages: []
+note: >-
+  DreamThreads publishes NO client library on any registry. The npm registry search for
+  "dreamthreads" returns 0 objects, registry.npmjs.org/dreamthreads and
+  pypi.org/pypi/dreamthreads/json both return 404, and the provider's own developer toolkit repo
+  contains no package manifest of any kind (no package.json, pyproject.toml, gemspec or go.mod).
+  What the provider ships instead is a copy-paste example set plus the machine-readable contracts —
+  see examples/ in this repo. No SDKs pointer is emitted, because none exists.
+registries_checked:
+  - registry: npm
+    query: https://registry.npmjs.org/dreamthreads
+    status: 404
+  - registry: npm
+    query: https://registry.npmjs.org/-/v1/search?text=dreamthreads
+    status: 200
+    results: 0
+  - registry: pypi
+    query: https://pypi.org/pypi/dreamthreads/json
+    status: 404
+  - registry: github
+    query: https://api.github.com/repos/abdulrahimiqbal/dreamthreads-developer/git/trees/HEAD?recursive=1
+    status: 200
+    result: no package manifest present
+first_party_code_assets:
+  - kind: example client
+    language: javascript
+    file: examples/dreamthreads-example-javascript.mjs
+    source: https://github.com/abdulrahimiqbal/dreamthreads-developer/blob/main/examples/javascript.mjs
+    version: null
+    published: null
+    official: true
+    note: Runnable example, not a published package — no registry entry to version.
+  - kind: example client
+    language: python
+    file: examples/dreamthreads-example-python.py
+    source: https://github.com/abdulrahimiqbal/dreamthreads-developer/blob/main/examples/python.py
+    version: null
+    published: null
+    official: true
+    note: Runnable example, not a published package — no registry entry to version.
+  - kind: example client
+    language: shell
+    file: examples/dreamthreads-example-curl.sh
+    source: https://github.com/abdulrahimiqbal/dreamthreads-developer/blob/main/examples/curl.sh
+    version: null
+    published: null
+    official: true
+  - kind: postman collection
+    language: null
+    file: collections/dreamthreads-postman.json
+    source: https://mydreamthreads.xyz/dream-interpretation-api/postman.json
+    version: null
+    published: null
+    official: true
+    note: Postman Collection v2.1.0 with three requests; not distributed through a package registry.

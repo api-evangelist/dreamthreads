@@ -1,0 +1,344 @@
+generated: '2026-08-14'
+method: probed
+source: https://mydreamthreads.xyz/mcp   # MCP tools/call search_dream_concepts, anonymous, HTTP 200
+docs: https://mydreamthreads.xyz/dream-meaning
+name: DreamGraph concept vocabulary
+description: >-
+  DreamGraph is DreamThreads' controlled, context-first vocabulary of dream elements. Every concept
+  carries a stable id, a slug, a human name, a TYPE that classifies what kind of dream element it is,
+  a one-line descriptive gloss, and a canonical URL. The provider frames these as descriptive
+  concepts, explicitly NOT universal symbolic definitions, which is the whole editorial premise of
+  the product.
+harvest:
+  how: >-
+    There is no list-all endpoint and no published vocabulary file. The vocabulary was enumerated by
+    calling the provider's own anonymous MCP tool `search_dream_concepts` (limit 12) across 85 dream
+    terms on 2026-08-14 and deduplicating the returned concept records. Every entry below is a
+    verbatim provider-returned record — none was authored here.
+  queries_issued: 85
+  concepts_discovered: 49
+  completeness: unknown
+  completeness_note: >-
+    A sampling harvest cannot prove coverage. 49 concepts is a floor, not a total: any concept no
+    query happened to match is absent from this file. Recording the floor honestly is the point.
+discoverability_finding: >-
+  Each concept has a live canonical page at https://mydreamthreads.xyz/dreamgraph/<slug> (probed
+  /dreamgraph/snake -> HTTP 200), but there is NO index page (/dreamgraph -> HTTP 404) and none of
+  the 49 concept URLs appear in https://mydreamthreads.xyz/sitemap.xml, which lists 30 URLs and
+  covers only the 17 editorial /dream-meaning guides. The machine vocabulary and the human library
+  are therefore two disjoint surfaces, and the machine one is unlinked and uncrawlable.
+concept_types:
+  - { type: figure, count: 14 }
+  - { type: action, count: 7 }
+  - { type: location, count: 7 }
+  - { type: environment, count: 6 }
+  - { type: object, count: 4 }
+  - { type: body, count: 3 }
+  - { type: event, count: 3 }
+  - { type: state, count: 3 }
+  - { type: emotion, count: 2 }
+concept_count: 49
+concepts:
+  - id: "DT:E:000008"
+    slug: being-chased
+    name: "Being chased"
+    type: action
+    description: "Pursuit in which the dreamer or another figure tries to escape."
+    url: https://mydreamthreads.xyz/dreamgraph/being-chased
+  - id: "DT:E:000017"
+    slug: drowning
+    name: "Drowning"
+    type: action
+    description: "Submersion with danger, breathlessness, or loss of control."
+    url: https://mydreamthreads.xyz/dreamgraph/drowning
+  - id: "DT:E:000003"
+    slug: falling
+    name: "Falling"
+    type: action
+    description: "Downward movement, loss of footing, or deliberate descent."
+    url: https://mydreamthreads.xyz/dreamgraph/falling
+  - id: "DT:E:000009"
+    slug: flying
+    name: "Flying"
+    type: action
+    description: "Movement or suspension through the air."
+    url: https://mydreamthreads.xyz/dreamgraph/flying
+  - id: "DT:E:000039"
+    slug: hiding
+    name: "Hiding"
+    type: action
+    description: "Concealment from another figure, event, or view."
+    url: https://mydreamthreads.xyz/dreamgraph/hiding
+  - id: "DT:E:000038"
+    slug: running
+    name: "Running"
+    type: action
+    description: "Running toward, away from, or through a setting."
+    url: https://mydreamthreads.xyz/dreamgraph/running
+  - id: "DT:E:000051"
+    slug: swimming
+    name: "Swimming"
+    type: action
+    description: "Self-directed movement through water."
+    url: https://mydreamthreads.xyz/dreamgraph/swimming
+  - id: "DT:E:000024"
+    slug: blood
+    name: "Blood"
+    type: body
+    description: "Blood or bleeding within the dream."
+    url: https://mydreamthreads.xyz/dreamgraph/blood
+  - id: "DT:E:000011"
+    slug: pregnancy
+    name: "Pregnancy"
+    type: body
+    description: "Pregnancy, birth, or expecting a baby in the dream."
+    url: https://mydreamthreads.xyz/dreamgraph/pregnancy
+  - id: "DT:E:000004"
+    slug: teeth
+    name: "Teeth"
+    type: body
+    description: "Teeth, gums, or dental sensations within the dream."
+    url: https://mydreamthreads.xyz/dreamgraph/teeth
+  - id: "DT:E:000040"
+    slug: crying
+    name: "Crying"
+    type: emotion
+    description: "Crying or tears expressed by the dreamer or another figure."
+    url: https://mydreamthreads.xyz/dreamgraph/crying
+  - id: "DT:E:000041"
+    slug: laughing
+    name: "Laughing"
+    type: emotion
+    description: "Laughter, amusement, or laughing."
+    url: https://mydreamthreads.xyz/dreamgraph/laughing
+  - id: "DT:E:000046"
+    slug: darkness
+    name: "Darkness"
+    type: environment
+    description: "Darkness or absence of light."
+    url: https://mydreamthreads.xyz/dreamgraph/darkness
+  - id: "DT:E:000015"
+    slug: fire
+    name: "Fire"
+    type: environment
+    description: "Fire, flames, smoke, or burning."
+    url: https://mydreamthreads.xyz/dreamgraph/fire
+  - id: "DT:E:000047"
+    slug: light
+    name: "Light"
+    type: environment
+    description: "Light, brightness, glow, or illumination."
+    url: https://mydreamthreads.xyz/dreamgraph/light
+  - id: "DT:E:000034"
+    slug: rain
+    name: "Rain"
+    type: environment
+    description: "Rain or rainfall as weather or sensation."
+    url: https://mydreamthreads.xyz/dreamgraph/rain
+  - id: "DT:E:000033"
+    slug: storm
+    name: "Storm"
+    type: environment
+    description: "A storm or severe weather event."
+    url: https://mydreamthreads.xyz/dreamgraph/storm
+  - id: "DT:E:000002"
+    slug: water
+    name: "Water"
+    type: environment
+    description: "Water present as an environment, force, substance, or sensory feature."
+    url: https://mydreamthreads.xyz/dreamgraph/water
+  - id: "DT:E:000013"
+    slug: being-late
+    name: "Being late"
+    type: event
+    description: "Arrival pressure, missed timing, or inability to reach an event on time."
+    url: https://mydreamthreads.xyz/dreamgraph/being-late
+  - id: "DT:E:000005"
+    slug: death
+    name: "Death"
+    type: event
+    description: "Death or dying within dream content, without implying prediction."
+    url: https://mydreamthreads.xyz/dreamgraph/death
+  - id: "DT:E:000025"
+    slug: wedding
+    name: "Wedding"
+    type: event
+    description: "A wedding, marriage ceremony, or related preparation."
+    url: https://mydreamthreads.xyz/dreamgraph/wedding
+  - id: "DT:E:000010"
+    slug: baby
+    name: "Baby"
+    type: figure
+    description: "A baby or infant present in the dream."
+    url: https://mydreamthreads.xyz/dreamgraph/baby
+  - id: "DT:E:000022"
+    slug: cat
+    name: "Cat"
+    type: figure
+    description: "A cat or feline figure."
+    url: https://mydreamthreads.xyz/dreamgraph/cat
+  - id: "DT:E:000042"
+    slug: deceased-relative
+    name: "Deceased relative"
+    type: figure
+    description: "A family member known to be deceased."
+    url: https://mydreamthreads.xyz/dreamgraph/deceased-relative
+  - id: "DT:E:000021"
+    slug: dog
+    name: "Dog"
+    type: figure
+    description: "A dog appearing as companion, observer, pursuer, or threat."
+    url: https://mydreamthreads.xyz/dreamgraph/dog
+  - id: "DT:E:000006"
+    slug: ex-partner
+    name: "Ex-partner"
+    type: figure
+    description: "A former romantic partner or spouse."
+    url: https://mydreamthreads.xyz/dreamgraph/ex-partner
+  - id: "DT:E:000020"
+    slug: father
+    name: "Father"
+    type: figure
+    description: "A father or paternal figure."
+    url: https://mydreamthreads.xyz/dreamgraph/father
+  - id: "DT:E:000044"
+    slug: friend
+    name: "Friend"
+    type: figure
+    description: "A friend or peer known to the dreamer."
+    url: https://mydreamthreads.xyz/dreamgraph/friend
+  - id: "DT:E:000048"
+    slug: grandfather
+    name: "Grandfather"
+    type: figure
+    description: "A grandfather or grandfather-like figure."
+    url: https://mydreamthreads.xyz/dreamgraph/grandfather
+  - id: "DT:E:000049"
+    slug: grandmother
+    name: "Grandmother"
+    type: figure
+    description: "A grandmother or grandmother-like figure."
+    url: https://mydreamthreads.xyz/dreamgraph/grandmother
+  - id: "DT:E:000019"
+    slug: mother
+    name: "Mother"
+    type: figure
+    description: "A mother or maternal figure."
+    url: https://mydreamthreads.xyz/dreamgraph/mother
+  - id: "DT:E:000045"
+    slug: partner
+    name: "Partner"
+    type: figure
+    description: "A current romantic partner or spouse."
+    url: https://mydreamthreads.xyz/dreamgraph/partner
+  - id: "DT:E:000001"
+    slug: snake
+    name: "Snake"
+    type: figure
+    description: "A snake or serpent appearing as a creature, threat, companion, or transformed self."
+    url: https://mydreamthreads.xyz/dreamgraph/snake
+  - id: "DT:E:000023"
+    slug: spider
+    name: "Spider"
+    type: figure
+    description: "A spider or spider web."
+    url: https://mydreamthreads.xyz/dreamgraph/spider
+  - id: "DT:E:000043"
+    slug: stranger
+    name: "Stranger"
+    type: figure
+    description: "An unfamiliar or unidentified person."
+    url: https://mydreamthreads.xyz/dreamgraph/stranger
+  - id: "DT:E:000027"
+    slug: childhood-home
+    name: "Childhood home"
+    type: location
+    description: "A home associated explicitly with childhood or growing up."
+    url: https://mydreamthreads.xyz/dreamgraph/childhood-home
+  - id: "DT:E:000032"
+    slug: forest
+    name: "Forest"
+    type: location
+    description: "A forest, woods, or dense natural landscape."
+    url: https://mydreamthreads.xyz/dreamgraph/forest
+  - id: "DT:E:000052"
+    slug: garden
+    name: "Garden"
+    type: location
+    description: "A cultivated outdoor space, yard, or garden."
+    url: https://mydreamthreads.xyz/dreamgraph/garden
+  - id: "DT:E:000007"
+    slug: house
+    name: "House"
+    type: location
+    description: "A home, dwelling, or house-like structure."
+    url: https://mydreamthreads.xyz/dreamgraph/house
+  - id: "DT:E:000016"
+    slug: ocean
+    name: "Ocean"
+    type: location
+    description: "An ocean, sea, shoreline, or open body of water."
+    url: https://mydreamthreads.xyz/dreamgraph/ocean
+  - id: "DT:E:000012"
+    slug: school
+    name: "School"
+    type: location
+    description: "A school, classroom, campus, or examination setting."
+    url: https://mydreamthreads.xyz/dreamgraph/school
+  - id: "DT:E:000028"
+    slug: work
+    name: "Work"
+    type: location
+    description: "A workplace, job, colleague, or work demand."
+    url: https://mydreamthreads.xyz/dreamgraph/work
+  - id: "DT:E:000018"
+    slug: car
+    name: "Car"
+    type: object
+    description: "A car or road vehicle, including being a driver or passenger."
+    url: https://mydreamthreads.xyz/dreamgraph/car
+  - id: "DT:E:000031"
+    slug: door
+    name: "Door"
+    type: object
+    description: "A door, gate, threshold, entrance, or exit."
+    url: https://mydreamthreads.xyz/dreamgraph/door
+  - id: "DT:E:000029"
+    slug: money
+    name: "Money"
+    type: object
+    description: "Money, payment, debt, or financial objects."
+    url: https://mydreamthreads.xyz/dreamgraph/money
+  - id: "DT:E:000030"
+    slug: stairs
+    name: "Stairs"
+    type: object
+    description: "Stairs, steps, ladders, or movement between levels."
+    url: https://mydreamthreads.xyz/dreamgraph/stairs
+  - id: "DT:E:000035"
+    slug: being-lost
+    name: "Being lost"
+    type: state
+    description: "Disorientation or inability to find a route or destination."
+    url: https://mydreamthreads.xyz/dreamgraph/being-lost
+  - id: "DT:E:000014"
+    slug: naked
+    name: "Naked"
+    type: state
+    description: "Nudity or unexpected lack of clothing."
+    url: https://mydreamthreads.xyz/dreamgraph/naked
+  - id: "DT:E:000050"
+    slug: unable-to-move
+    name: "Unable to move"
+    type: state
+    description: "Inability to move or act within the dream or at its edge."
+    url: https://mydreamthreads.xyz/dreamgraph/unable-to-move
+x-evidence:
+  fetched: '2026-08-14'
+  url: https://mydreamthreads.xyz/mcp
+  method: 'POST tools/call search_dream_concepts'
+  http_status: 200
+  content_type: text/event-stream
+  page_probe:
+    - { url: 'https://mydreamthreads.xyz/dreamgraph/snake', status: 200 }
+    - { url: 'https://mydreamthreads.xyz/dreamgraph', status: 404 }

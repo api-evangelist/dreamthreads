@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "type",
+          "description",
+          "url"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "attribution": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "const": "DreamThreads"
+        },
+        "methodology_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "provider",
+        "methodology_url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "query",
+    "results",
+    "attribution"
+  ],
+  "additionalProperties": false
+}

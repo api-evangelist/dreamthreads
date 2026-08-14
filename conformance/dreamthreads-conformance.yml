@@ -1,0 +1,79 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/_original/dreamthreads-dreamgraph-openapi.json
+searched:
+  - https://mydreamthreads.xyz/dream-interpretation-api
+  - https://mydreamthreads.xyz/.well-known/api-onboarding
+  - https://mydreamthreads.xyz/privacy
+note: >-
+  Standards conformance derived from the live contract and the provider's published discovery
+  documents. No certification or compliance program (SOC 2, ISO 27001, HIPAA, PCI, GDPR attestation)
+  is published anywhere on the provider's surface, so no Compliance pointer is emitted.
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: openapi 3.1.0 document served at /dream-interpretation-api/openapi.json; 4 operations, 9 schemas
+  - id: rfc9457-problem-details
+    conforms: true
+    evidence: >-
+      All eight error responses use application/problem+json with type/title/status/detail/instance;
+      the Error schema documents itself as "RFC 9457 Problem Details".
+  - id: json-schema-2020-12
+    conforms: true
+    evidence: MCP tool input/output schemas declare $schema https://json-schema.org/draft/2020-12/schema
+  - id: mcp
+    conforms: true
+    version: streamable-http; registry manifest schema 2025-12-11
+    evidence: >-
+      Anonymous tools/list HTTP 200 at https://mydreamthreads.xyz/mcp; server manifest at
+      /.well-known/mcp/server.json validates against the MCP registry server schema.
+  - id: apisjson-0.21
+    conforms: true
+    evidence: Provider-published APIs.json 0.21 index at https://mydreamthreads.xyz/apis.json
+  - id: aod-0.1
+    conforms: true
+    evidence: >-
+      API Onboarding Descriptor 0.1 at /.well-known/api-onboarding declaring access mechanisms,
+      authentication methods, credentials, scopes model, flow, economics and privacy.
+  - id: llmstxt
+    conforms: true
+    evidence: https://mydreamthreads.xyz/llms.txt — H1, blockquote summary, sectioned link lists
+  - id: openai-plugin-manifest-v1
+    conforms: true
+    evidence: /.well-known/ai-plugin.json schema_version v1 with auth + api blocks
+  - id: ietf-ratelimit-headers
+    conforms: partial
+    evidence: >-
+      Emits RateLimit-Limit / RateLimit-Remaining / RateLimit-Reset (and legacy X-RateLimit-*), but
+      Reset is a unix timestamp rather than delta-seconds and no RateLimit-Policy or Retry-After is
+      returned.
+  - id: rfc8615-well-known
+    conforms: true
+    evidence: Three real documents served under /.well-known/ (ai-plugin.json, mcp/server.json, api-onboarding)
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme; bearer partner key only
+  - id: openid-connect
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header support documented
+  - id: asyncapi
+    conforms: false
+    evidence: No event, streaming or webhook surface published — not applicable to this API
+  - id: a2a
+    conforms: false
+    evidence: /.well-known/agent-card.json and /.well-known/agent.json both 404
+  - id: graphql
+    conforms: false
+    evidence: /graphql returns 404
+certifications: []
+compliance_program:
+  published: false
+  note: >-
+    The provider publishes a privacy policy, terms, an editorial policy and an explicit data boundary
+    ("no API dream enters the contribution corpus"), but no audited certification or trust center.
