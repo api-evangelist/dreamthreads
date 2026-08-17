@@ -3,7 +3,7 @@ description: >-
   DreamThreads exposes the DreamGraph API, a context-first dream interpretation and structured parsing platform. It
   offers a keyless public dream parser, gated partner interpretation endpoints, a hosted MCP server, and full
   machine-readable contracts. Interpretations are framed as reflective, not diagnostic or predictive.
-url: https://dreamthreads.apievangelist.com/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/dreamthreads/refs/heads/main/apis.yml
 image: https://mydreamthreads.xyz/opengraph-image
 created: '2026-08-13'
 modified: '2026-08-14'
