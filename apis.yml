@@ -11,6 +11,16 @@ specificationVersion: '0.23'
 tags:
   - dream analysis
   - dream interpretation
+  - Natural Language Processing
+  - structured parsing
+  - AI Agents
+  - MCP Server
+  - OpenAPI
+  - wellness / sleep
+  - research tooling
+tags_raw:
+  - dream analysis
+  - dream interpretation
   - natural language processing
   - structured parsing
   - AI agents
@@ -28,6 +38,16 @@ apis:
     humanURL: https://mydreamthreads.xyz/dream-interpretation-api
     baseURL: https://mydreamthreads.xyz/api/v1/dreamgraph
     tags:
+      - dream analysis
+      - dream interpretation
+      - Natural Language Processing
+      - structured parsing
+      - AI Agents
+      - MCP Server
+      - OpenAPI
+      - wellness / sleep
+      - research tooling
+    tags_raw:
       - dream analysis
       - dream interpretation
       - natural language processing
