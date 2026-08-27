@@ -29,69 +29,59 @@ tags_raw:
   - wellness / sleep
   - research tooling
 apis:
-  - aid: dreamthreads:dreamgraph-api
-    name: DreamGraph API
-    description: >-
-      REST API for dream text parsing and interpretation. Includes a keyless public parser and liveness endpoint, plus
-      gated partner endpoints for structured parsing and reflective interpretation. Also exposes a hosted MCP server,
-      llms.txt, and machine-readable contracts.
-    humanURL: https://mydreamthreads.xyz/dream-interpretation-api
-    baseURL: https://mydreamthreads.xyz/api/v1/dreamgraph
-    tags:
-      - dream analysis
-      - dream interpretation
-      - Natural Language Processing
-      - structured parsing
-      - AI Agents
-      - MCP Server
-      - OpenAPI
-      - wellness / sleep
-      - research tooling
-    tags_raw:
-      - dream analysis
-      - dream interpretation
-      - natural language processing
-      - structured parsing
-      - AI agents
-      - MCP server
-      - OpenAPI
-      - wellness / sleep
-      - research tooling
-    properties:
-      - type: OpenAPI
-        name: DreamGraph V1 OpenAPI 3.1 contract (live)
-        url: https://mydreamthreads.xyz/dream-interpretation-api/openapi.json
-      - type: OpenAPI
-        name: DreamGraph V1 OpenAPI 3.1 contract (refined)
-        url: openapi/dreamthreads-dreamgraph-openapi.yml
-      - type: PostmanCollection
-        url: https://mydreamthreads.xyz/dream-interpretation-api/postman.json
-      - type: MCPServer
-        url: https://mydreamthreads.xyz/mcp
-      - type: MCPServer
-        name: DreamGraph MCP server manifest
-        url: mcp/dreamthreads-mcp.yml
-      - type: ToolCrosswalk
-        name: MCP tool to REST operation crosswalk
-        url: mcp/dreamthreads-tool-crosswalk.yml
-      - type: LLMsTxt
-        url: https://mydreamthreads.xyz/llms.txt
-      - type: Documentation
-        url: https://mydreamthreads.xyz/dream-interpretation-api
-      - type: Documentation
-        url: https://abdulrahimiqbal.github.io/dreamthreads-developer/
-      - type: Overlay
-        name: API Evangelist enhancements overlay
-        url: overlays/dreamthreads-dreamgraph-overlay.yaml
-      - type: ErrorCatalog
-        name: RFC 9457 problem types
-        url: errors/dreamthreads-problem-types.yml
-      - type: DataModel
-        name: DreamGraph document model
-        url: data-model/dreamthreads-data-model.yml
-      - type: Examples
-        name: First-party runnable examples
-        url: examples/_index.yml
+- aid: dreamthreads:dreamthreads-dream-interpretation-api
+  name: DreamThreads Dream interpretation API
+  description: Generate a tentative, context-aware dream reflection with a factor trace and provenance.
+  humanURL: https://mydreamthreads.xyz/dream-interpretation-api
+  baseURL: https://mydreamthreads.xyz/api/v1/dreamgraph
+  tags:
+  - Dream interpretation
+  properties:
+  - type: OpenAPI
+    url: openapi/dreamthreads-dream-interpretation-api-openapi.yml
+  - type: PostmanCollection
+    url: https://mydreamthreads.xyz/dream-interpretation-api/postman.json
+  - type: ToolCrosswalk
+    url: mcp/dreamthreads-tool-crosswalk.yml
+  - type: LLMsTxt
+    url: https://mydreamthreads.xyz/llms.txt
+  - type: Documentation
+    url: https://mydreamthreads.xyz/dream-interpretation-api
+  - type: Documentation
+    url: https://abdulrahimiqbal.github.io/dreamthreads-developer/
+  - type: ErrorCatalog
+    url: errors/dreamthreads-problem-types.yml
+  - type: DataModel
+    url: data-model/dreamthreads-data-model.yml
+  - type: Examples
+    url: examples/_index.yml
+- aid: dreamthreads:dreamthreads-dream-parsing-api
+  name: DreamThreads Dream parsing API
+  description: >-
+    Turn dream text into structured entities, emotions, actions, agency, threat, outcome, and recurrence.
+  humanURL: https://mydreamthreads.xyz/dream-interpretation-api
+  baseURL: https://mydreamthreads.xyz/api/v1/dreamgraph
+  tags:
+  - Dream parsing
+  properties:
+  - type: OpenAPI
+    url: openapi/dreamthreads-dream-parsing-api-openapi.yml
+  - type: PostmanCollection
+    url: https://mydreamthreads.xyz/dream-interpretation-api/postman.json
+  - type: ToolCrosswalk
+    url: mcp/dreamthreads-tool-crosswalk.yml
+  - type: LLMsTxt
+    url: https://mydreamthreads.xyz/llms.txt
+  - type: Documentation
+    url: https://mydreamthreads.xyz/dream-interpretation-api
+  - type: Documentation
+    url: https://abdulrahimiqbal.github.io/dreamthreads-developer/
+  - type: ErrorCatalog
+    url: errors/dreamthreads-problem-types.yml
+  - type: DataModel
+    url: data-model/dreamthreads-data-model.yml
+  - type: Examples
+    url: examples/_index.yml
 maintainers:
   - FN: Rahim Iqbal
     email: rahim@mydreamthreads.xyz
@@ -100,6 +90,8 @@ maintainers:
     email: ariqbal@mun.ca
     url: mailto:ariqbal@mun.ca
 common:
+  - type: MCPServer
+    url: mcp/dreamthreads-mcp.yml
   - type: DeveloperPortal
     name: DreamGraph developer portal
     url: https://mydreamthreads.xyz/dream-interpretation-api
