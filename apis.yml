@@ -4,6 +4,18 @@ description: >-
   offers a keyless public dream parser, gated partner interpretation endpoints, a hosted MCP server, and full
   machine-readable contracts. Interpretations are framed as reflective, not diagnostic or predictive.
 url: https://raw.githubusercontent.com/api-evangelist/dreamthreads/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://mydreamthreads.xyz/opengraph-image
 created: '2026-08-13'
 modified: '2026-08-14'
