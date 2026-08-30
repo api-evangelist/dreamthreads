@@ -1,0 +1,414 @@
+openapi: 3.2.0
+info:
+  title: DreamThreads Dream interpretation API
+  version: 1.1.0
+  summary: Context-aware dream analysis and structured dream parsing
+  description: A context-aware dream interpretation and structured dream parsing API. Outputs are reflective—not diagnostic, predictive, or a substitute for professional care.
+  termsOfService: https://mydreamthreads.xyz/terms
+  license:
+    name: Proprietary; use subject to DreamThreads terms
+    url: https://mydreamthreads.xyz/terms
+  contact:
+    name: DreamThreads API
+    email: rahim@mydreamthreads.xyz
+    url: https://mydreamthreads.xyz/dream-interpretation-api
+  x-logo:
+    url: https://mydreamthreads.xyz/icon.svg
+    backgroundColor: '#11111c'
+    altText: DreamThreads crescent moon
+servers:
+- url: https://mydreamthreads.xyz/api/v1/dreamgraph
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Dream interpretation
+  description: Generate a tentative, context-aware dream reflection with a factor trace and provenance.
+paths:
+  /interpret:
+    post:
+      tags:
+      - Dream interpretation
+      operationId: interpretDream
+      summary: Generate a context-aware dream interpretation
+      description: Requires a reviewed DreamThreads partner bearer key. Send one UTF-8 dream narrative of 1–6,000 characters and, when available, a short interpretive lens plus waking-life or physiological context. Use this endpoint only when a user wants a tentative reflection; use parseDream when structured extraction is sufficient. The response contains the reflection, symbols, an open question, a factor-level reason trace, provenance, diagnostics, timing, and an attributed DreamThreads deep link. Output is reflective—not diagnostic, predictive, or a fixed statement of meaning.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterpretRequest'
+            example:
+              text: I watched a snake in my garden. I felt peaceful.
+              waking_context: I recently started caring for a garden.
+      responses:
+        '200':
+          description: Interpretation completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterpretResponse'
+              example:
+                data:
+                  interpretation:
+                    essence: The dream may be holding change and attention together without treating either as a threat.
+                    symbols:
+                    - symbol: snake
+                      note: Because you felt peaceful, the snake may point toward alertness or change rather than danger.
+                    reading: 'The garden places the image in something you actively tend. Your calm response matters: it weakens a simple threat reading. The dream may be exploring how you relate to a change that asks for attention without requiring panic.'
+                    question: What change are you willing to observe before deciding what it means?
+                    reasonTrace:
+                    - factor: emotion
+                      value: peaceful
+                      effect: weakens threat-first readings
+                    provenance: []
+                    dreamgraphVersion: dreamgraph-v0.1.0
+                    parserVersion: dream-parser-rules-v1.0.0
+                    engineVersion: dreamgraph-interpretation-v1
+                  diagnostic:
+                    unsupportedCount: 0
+                  timing:
+                    parserLatencyMs: 2
+                    totalLatencyMs: 680
+                  attribution:
+                    provider: DreamThreads
+                    deep_link: https://mydreamthreads.xyz/?utm_source=partner&utm_medium=api
+                request_id: partner-request-123
+                version: v1
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '413':
+          $ref: '#/components/responses/PayloadTooLarge'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '502':
+          $ref: '#/components/responses/UpstreamFailure'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+components:
+  responses:
+    BadRequest:
+      description: The JSON body or dream input is invalid.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/invalid_dream
+            title: DreamThreads API request failed
+            status: 400
+            detail: Dream text must contain 1-6000 characters.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: invalid_dream
+              message: Dream text must contain 1-6000 characters.
+            request_id: example-request-123
+            version: v1
+    RateLimited:
+      description: The active client or partner request quota is exhausted.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/rate_limit_exceeded
+            title: DreamThreads API request failed
+            status: 429
+            detail: The active request quota is exhausted.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: rate_limit_exceeded
+              message: The active request quota is exhausted.
+            request_id: example-request-123
+            version: v1
+    UpstreamFailure:
+      description: The interpretation model or supporting upstream service failed.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/interpretation_failed
+            title: DreamThreads API request failed
+            status: 502
+            detail: Interpretation failed.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: interpretation_failed
+              message: Interpretation failed.
+            request_id: example-request-123
+            version: v1
+    PayloadTooLarge:
+      description: The HTTP request body exceeds the service limit.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/payload_too_large
+            title: DreamThreads API request failed
+            status: 413
+            detail: Request payload is too large.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: payload_too_large
+              message: Request payload is too large.
+            request_id: example-request-123
+            version: v1
+    Unauthorized:
+      description: The partner key is missing, invalid, or inactive.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/invalid_api_key
+            title: DreamThreads API request failed
+            status: 401
+            detail: A valid DreamThreads API key is required.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: invalid_api_key
+              message: A valid DreamThreads API key is required.
+            request_id: example-request-123
+            version: v1
+    ServiceUnavailable:
+      description: The requested DreamGraph capability is temporarily unavailable or disabled.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/feature_disabled
+            title: DreamThreads API request failed
+            status: 503
+            detail: DreamGraph external API is not enabled.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: feature_disabled
+              message: DreamGraph external API is not enabled.
+            request_id: example-request-123
+            version: v1
+  schemas:
+    InterpretRequest:
+      type: object
+      description: Inputs for a context-aware, tentative dream reflection.
+      additionalProperties: false
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 6000
+          description: Dream text. Keep the key server-side and obtain appropriate user consent before transmitting personal content.
+        lens:
+          type: string
+          maxLength: 80
+          description: Optional interpretive emphasis, such as emotional processing or recurring patterns.
+          example: emotional processing
+        waking_context:
+          type: string
+          maxLength: 2000
+          description: Optional waking-life context supplied by the dreamer; omit rather than infer it.
+          example: I recently started caring for a garden.
+        physiological_context:
+          type: string
+          maxLength: 1000
+          description: Optional sleep, health, medication, or physical context explicitly supplied by the dreamer.
+          example: I woke briefly before the dream.
+    InterpretResponse:
+      type: object
+      description: Standard success envelope for a completed context-aware reflection.
+      additionalProperties: false
+      required:
+      - data
+      - request_id
+      - version
+      properties:
+        data:
+          type: object
+          description: Interpretation result, diagnostics, latency, and required attribution.
+          additionalProperties: false
+          required:
+          - interpretation
+          - diagnostic
+          - timing
+          - attribution
+          properties:
+            interpretation:
+              $ref: '#/components/schemas/Interpretation'
+            diagnostic:
+              type: object
+              additionalProperties: true
+              description: Quality diagnostics, including unsupported-assertion counts when available.
+            timing:
+              type: object
+              additionalProperties: true
+              description: Parser and end-to-end latency measurements in milliseconds.
+            attribution:
+              type: object
+              description: Attribution that integrations must preserve.
+              additionalProperties: false
+              required:
+              - provider
+              - deep_link
+              properties:
+                provider:
+                  type: string
+                  const: DreamThreads
+                  description: Required provider credit.
+                  example: DreamThreads
+                deep_link:
+                  type: string
+                  format: uri
+                  description: Request-attributed DreamThreads return link.
+                  example: https://mydreamthreads.xyz/?utm_source=partner&utm_medium=api
+        request_id:
+          type: string
+          description: Request correlation identifier.
+          example: partner-request-123
+        version:
+          type: string
+          description: DreamThreads API envelope version.
+          example: v1
+    Interpretation:
+      type: object
+      description: Tentative reflection and transparent factors used to produce it.
+      required:
+      - essence
+      - symbols
+      - reading
+      - question
+      - reasonTrace
+      - provenance
+      properties:
+        essence:
+          type: string
+          description: One-sentence tentative synthesis, written with uncertainty rather than certainty.
+          example: The dream may be holding change and attention together without treating either as a threat.
+        symbols:
+          type: array
+          description: Context-qualified observations about prominent dream elements.
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - symbol
+            - note
+            properties:
+              symbol:
+                type: string
+                description: Dream element as it appeared in the narrative.
+                example: snake
+              note:
+                type: string
+                description: Tentative note qualified by the dream's context and emotion.
+                example: Because you felt peaceful, the snake may point toward alertness or change rather than danger.
+        reading:
+          type: string
+          description: Longer reflective synthesis grounded in the supplied narrative and context.
+          example: Your calm response weakens a simple threat reading and may invite attention before judgment.
+        question:
+          type: string
+          description: Open-ended reflection question; never a diagnosis or prediction.
+          example: What change are you willing to observe before deciding what it means?
+        reasonTrace:
+          type: array
+          description: Factors that materially changed or constrained the reading.
+          items:
+            type: object
+            additionalProperties: true
+            description: One factor, its observed value, and its effect on the reading.
+        provenance:
+          type: array
+          description: Reviewed source or DreamGraph claim references used in the response.
+          items:
+            type: object
+            additionalProperties: true
+            description: Typed provenance record for a supporting claim.
+        dreamgraphVersion:
+          type: string
+          description: DreamGraph knowledge version used for this response.
+          example: dreamgraph-v0.1.0
+        parserVersion:
+          type: string
+          description: Structured parser version used for this response.
+          example: dream-parser-rules-v1.0.0
+        engineVersion:
+          type: string
+          description: Interpretation engine version used for this response.
+          example: dreamgraph-interpretation-v1
+    Error:
+      type: object
+      description: RFC 9457 Problem Details response with backward-compatible DreamThreads error fields.
+      additionalProperties: false
+      required:
+      - type
+      - title
+      - status
+      - detail
+      - instance
+      - error
+      - request_id
+      - version
+      properties:
+        type:
+          type: string
+          format: uri
+          description: Stable URI identifying the machine-readable problem type.
+          example: https://mydreamthreads.xyz/problems/invalid-dream
+        title:
+          type: string
+          description: Short, human-readable summary of the problem class.
+          example: DreamThreads API request failed
+        status:
+          type: integer
+          format: int32
+          minimum: 400
+          maximum: 599
+          description: HTTP status code returned for this occurrence.
+          example: 400
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence.
+          example: Dream text must contain 1-6000 characters.
+        instance:
+          type: string
+          format: uri
+          description: Request-specific problem occurrence identifier.
+          example: https://mydreamthreads.xyz/problems/requests/example-request-123
+        error:
+          type: object
+          description: Backward-compatible DreamThreads error object.
+          additionalProperties: false
+          required:
+          - code
+          - message
+          properties:
+            code:
+              type: string
+              description: Stable machine-readable error code.
+              example: invalid_dream
+            message:
+              type: string
+              description: Human-readable error message.
+              example: Dream text must contain 1-6000 characters.
+        request_id:
+          type: string
+          description: Correlation identifier echoed from X-Request-ID or generated by DreamThreads.
+          example: example-request-123
+        version:
+          type: string
+          description: DreamThreads API envelope version.
+          example: v1
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: DreamThreads partner API key
+externalDocs:
+  description: Dream interpretation API guide and access request
+  url: https://mydreamthreads.xyz/dream-interpretation-api
