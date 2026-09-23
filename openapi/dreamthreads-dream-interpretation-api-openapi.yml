@@ -89,57 +89,6 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 components:
   responses:
-    BadRequest:
-      description: The JSON body or dream input is invalid.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/invalid_dream
-            title: DreamThreads API request failed
-            status: 400
-            detail: Dream text must contain 1-6000 characters.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: invalid_dream
-              message: Dream text must contain 1-6000 characters.
-            request_id: example-request-123
-            version: v1
-    RateLimited:
-      description: The active client or partner request quota is exhausted.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/rate_limit_exceeded
-            title: DreamThreads API request failed
-            status: 429
-            detail: The active request quota is exhausted.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: rate_limit_exceeded
-              message: The active request quota is exhausted.
-            request_id: example-request-123
-            version: v1
-    UpstreamFailure:
-      description: The interpretation model or supporting upstream service failed.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/interpretation_failed
-            title: DreamThreads API request failed
-            status: 502
-            detail: Interpretation failed.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: interpretation_failed
-              message: Interpretation failed.
-            request_id: example-request-123
-            version: v1
     PayloadTooLarge:
       description: The HTTP request body exceeds the service limit.
       content:
@@ -155,6 +104,23 @@ components:
             error:
               code: payload_too_large
               message: Request payload is too large.
+            request_id: example-request-123
+            version: v1
+    BadRequest:
+      description: The JSON body or dream input is invalid.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/invalid_dream
+            title: DreamThreads API request failed
+            status: 400
+            detail: Dream text must contain 1-6000 characters.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: invalid_dream
+              message: Dream text must contain 1-6000 characters.
             request_id: example-request-123
             version: v1
     Unauthorized:
@@ -191,89 +157,41 @@ components:
               message: DreamGraph external API is not enabled.
             request_id: example-request-123
             version: v1
+    RateLimited:
+      description: The active client or partner request quota is exhausted.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/rate_limit_exceeded
+            title: DreamThreads API request failed
+            status: 429
+            detail: The active request quota is exhausted.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: rate_limit_exceeded
+              message: The active request quota is exhausted.
+            request_id: example-request-123
+            version: v1
+    UpstreamFailure:
+      description: The interpretation model or supporting upstream service failed.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/interpretation_failed
+            title: DreamThreads API request failed
+            status: 502
+            detail: Interpretation failed.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: interpretation_failed
+              message: Interpretation failed.
+            request_id: example-request-123
+            version: v1
   schemas:
-    InterpretRequest:
-      type: object
-      description: Inputs for a context-aware, tentative dream reflection.
-      additionalProperties: false
-      required:
-      - text
-      properties:
-        text:
-          type: string
-          minLength: 1
-          maxLength: 6000
-          description: Dream text. Keep the key server-side and obtain appropriate user consent before transmitting personal content.
-        lens:
-          type: string
-          maxLength: 80
-          description: Optional interpretive emphasis, such as emotional processing or recurring patterns.
-          example: emotional processing
-        waking_context:
-          type: string
-          maxLength: 2000
-          description: Optional waking-life context supplied by the dreamer; omit rather than infer it.
-          example: I recently started caring for a garden.
-        physiological_context:
-          type: string
-          maxLength: 1000
-          description: Optional sleep, health, medication, or physical context explicitly supplied by the dreamer.
-          example: I woke briefly before the dream.
-    InterpretResponse:
-      type: object
-      description: Standard success envelope for a completed context-aware reflection.
-      additionalProperties: false
-      required:
-      - data
-      - request_id
-      - version
-      properties:
-        data:
-          type: object
-          description: Interpretation result, diagnostics, latency, and required attribution.
-          additionalProperties: false
-          required:
-          - interpretation
-          - diagnostic
-          - timing
-          - attribution
-          properties:
-            interpretation:
-              $ref: '#/components/schemas/Interpretation'
-            diagnostic:
-              type: object
-              additionalProperties: true
-              description: Quality diagnostics, including unsupported-assertion counts when available.
-            timing:
-              type: object
-              additionalProperties: true
-              description: Parser and end-to-end latency measurements in milliseconds.
-            attribution:
-              type: object
-              description: Attribution that integrations must preserve.
-              additionalProperties: false
-              required:
-              - provider
-              - deep_link
-              properties:
-                provider:
-                  type: string
-                  const: DreamThreads
-                  description: Required provider credit.
-                  example: DreamThreads
-                deep_link:
-                  type: string
-                  format: uri
-                  description: Request-attributed DreamThreads return link.
-                  example: https://mydreamthreads.xyz/?utm_source=partner&utm_medium=api
-        request_id:
-          type: string
-          description: Request correlation identifier.
-          example: partner-request-123
-        version:
-          type: string
-          description: DreamThreads API envelope version.
-          example: v1
     Interpretation:
       type: object
       description: Tentative reflection and transparent factors used to produce it.
@@ -404,6 +322,88 @@ components:
           type: string
           description: DreamThreads API envelope version.
           example: v1
+    InterpretResponse:
+      type: object
+      description: Standard success envelope for a completed context-aware reflection.
+      additionalProperties: false
+      required:
+      - data
+      - request_id
+      - version
+      properties:
+        data:
+          type: object
+          description: Interpretation result, diagnostics, latency, and required attribution.
+          additionalProperties: false
+          required:
+          - interpretation
+          - diagnostic
+          - timing
+          - attribution
+          properties:
+            interpretation:
+              $ref: '#/components/schemas/Interpretation'
+            diagnostic:
+              type: object
+              additionalProperties: true
+              description: Quality diagnostics, including unsupported-assertion counts when available.
+            timing:
+              type: object
+              additionalProperties: true
+              description: Parser and end-to-end latency measurements in milliseconds.
+            attribution:
+              type: object
+              description: Attribution that integrations must preserve.
+              additionalProperties: false
+              required:
+              - provider
+              - deep_link
+              properties:
+                provider:
+                  type: string
+                  const: DreamThreads
+                  description: Required provider credit.
+                  example: DreamThreads
+                deep_link:
+                  type: string
+                  format: uri
+                  description: Request-attributed DreamThreads return link.
+                  example: https://mydreamthreads.xyz/?utm_source=partner&utm_medium=api
+        request_id:
+          type: string
+          description: Request correlation identifier.
+          example: partner-request-123
+        version:
+          type: string
+          description: DreamThreads API envelope version.
+          example: v1
+    InterpretRequest:
+      type: object
+      description: Inputs for a context-aware, tentative dream reflection.
+      additionalProperties: false
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 6000
+          description: Dream text. Keep the key server-side and obtain appropriate user consent before transmitting personal content.
+        lens:
+          type: string
+          maxLength: 80
+          description: Optional interpretive emphasis, such as emotional processing or recurring patterns.
+          example: emotional processing
+        waking_context:
+          type: string
+          maxLength: 2000
+          description: Optional waking-life context supplied by the dreamer; omit rather than infer it.
+          example: I recently started caring for a garden.
+        physiological_context:
+          type: string
+          maxLength: 1000
+          description: Optional sleep, health, medication, or physical context explicitly supplied by the dreamer.
+          example: I woke briefly before the dream.
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,0 +1,24 @@
+{
+  "provider": "dreamthreads",
+  "sources": [
+    "_original/dreamthreads-dreamgraph-openapi.json"
+  ],
+  "outputs": [
+    "dreamthreads-dream-interpretation-api-openapi.yml",
+    "dreamthreads-dream-parsing-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "dreamthreads-dreamgraph-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/dreamthreads-dreamgraph-openapi.yml: archived document superseded by a larger archived document",
+    "dreamthreads-dream-interpretation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dreamthreads-dream-parsing-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
