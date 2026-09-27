@@ -89,6 +89,23 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 components:
   responses:
+    ServiceUnavailable:
+      description: The requested DreamGraph capability is temporarily unavailable or disabled.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/feature_disabled
+            title: DreamThreads API request failed
+            status: 503
+            detail: DreamGraph external API is not enabled.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: feature_disabled
+              message: DreamGraph external API is not enabled.
+            request_id: example-request-123
+            version: v1
     PayloadTooLarge:
       description: The HTTP request body exceeds the service limit.
       content:
@@ -104,6 +121,23 @@ components:
             error:
               code: payload_too_large
               message: Request payload is too large.
+            request_id: example-request-123
+            version: v1
+    UpstreamFailure:
+      description: The interpretation model or supporting upstream service failed.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/interpretation_failed
+            title: DreamThreads API request failed
+            status: 502
+            detail: Interpretation failed.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: interpretation_failed
+              message: Interpretation failed.
             request_id: example-request-123
             version: v1
     BadRequest:
@@ -140,23 +174,6 @@ components:
               message: A valid DreamThreads API key is required.
             request_id: example-request-123
             version: v1
-    ServiceUnavailable:
-      description: The requested DreamGraph capability is temporarily unavailable or disabled.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/feature_disabled
-            title: DreamThreads API request failed
-            status: 503
-            detail: DreamGraph external API is not enabled.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: feature_disabled
-              message: DreamGraph external API is not enabled.
-            request_id: example-request-123
-            version: v1
     RateLimited:
       description: The active client or partner request quota is exhausted.
       content:
@@ -174,24 +191,70 @@ components:
               message: The active request quota is exhausted.
             request_id: example-request-123
             version: v1
-    UpstreamFailure:
-      description: The interpretation model or supporting upstream service failed.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/interpretation_failed
-            title: DreamThreads API request failed
-            status: 502
-            detail: Interpretation failed.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: interpretation_failed
-              message: Interpretation failed.
-            request_id: example-request-123
-            version: v1
   schemas:
+    Error:
+      type: object
+      description: RFC 9457 Problem Details response with backward-compatible DreamThreads error fields.
+      additionalProperties: false
+      required:
+      - type
+      - title
+      - status
+      - detail
+      - instance
+      - error
+      - request_id
+      - version
+      properties:
+        type:
+          type: string
+          format: uri
+          description: Stable URI identifying the machine-readable problem type.
+          example: https://mydreamthreads.xyz/problems/invalid-dream
+        title:
+          type: string
+          description: Short, human-readable summary of the problem class.
+          example: DreamThreads API request failed
+        status:
+          type: integer
+          format: int32
+          minimum: 400
+          maximum: 599
+          description: HTTP status code returned for this occurrence.
+          example: 400
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence.
+          example: Dream text must contain 1-6000 characters.
+        instance:
+          type: string
+          format: uri
+          description: Request-specific problem occurrence identifier.
+          example: https://mydreamthreads.xyz/problems/requests/example-request-123
+        error:
+          type: object
+          description: Backward-compatible DreamThreads error object.
+          additionalProperties: false
+          required:
+          - code
+          - message
+          properties:
+            code:
+              type: string
+              description: Stable machine-readable error code.
+              example: invalid_dream
+            message:
+              type: string
+              description: Human-readable error message.
+              example: Dream text must contain 1-6000 characters.
+        request_id:
+          type: string
+          description: Correlation identifier echoed from X-Request-ID or generated by DreamThreads.
+          example: example-request-123
+        version:
+          type: string
+          description: DreamThreads API envelope version.
+          example: v1
     Interpretation:
       type: object
       description: Tentative reflection and transparent factors used to produce it.
@@ -259,69 +322,33 @@ components:
           type: string
           description: Interpretation engine version used for this response.
           example: dreamgraph-interpretation-v1
-    Error:
+    InterpretRequest:
       type: object
-      description: RFC 9457 Problem Details response with backward-compatible DreamThreads error fields.
+      description: Inputs for a context-aware, tentative dream reflection.
       additionalProperties: false
       required:
-      - type
-      - title
-      - status
-      - detail
-      - instance
-      - error
-      - request_id
-      - version
+      - text
       properties:
-        type:
+        text:
           type: string
-          format: uri
-          description: Stable URI identifying the machine-readable problem type.
-          example: https://mydreamthreads.xyz/problems/invalid-dream
-        title:
+          minLength: 1
+          maxLength: 6000
+          description: Dream text. Keep the key server-side and obtain appropriate user consent before transmitting personal content.
+        lens:
           type: string
-          description: Short, human-readable summary of the problem class.
-          example: DreamThreads API request failed
-        status:
-          type: integer
-          format: int32
-          minimum: 400
-          maximum: 599
-          description: HTTP status code returned for this occurrence.
-          example: 400
-        detail:
+          maxLength: 80
+          description: Optional interpretive emphasis, such as emotional processing or recurring patterns.
+          example: emotional processing
+        waking_context:
           type: string
-          description: Human-readable explanation specific to this occurrence.
-          example: Dream text must contain 1-6000 characters.
-        instance:
+          maxLength: 2000
+          description: Optional waking-life context supplied by the dreamer; omit rather than infer it.
+          example: I recently started caring for a garden.
+        physiological_context:
           type: string
-          format: uri
-          description: Request-specific problem occurrence identifier.
-          example: https://mydreamthreads.xyz/problems/requests/example-request-123
-        error:
-          type: object
-          description: Backward-compatible DreamThreads error object.
-          additionalProperties: false
-          required:
-          - code
-          - message
-          properties:
-            code:
-              type: string
-              description: Stable machine-readable error code.
-              example: invalid_dream
-            message:
-              type: string
-              description: Human-readable error message.
-              example: Dream text must contain 1-6000 characters.
-        request_id:
-          type: string
-          description: Correlation identifier echoed from X-Request-ID or generated by DreamThreads.
-          example: example-request-123
-        version:
-          type: string
-          description: DreamThreads API envelope version.
-          example: v1
+          maxLength: 1000
+          description: Optional sleep, health, medication, or physical context explicitly supplied by the dreamer.
+          example: I woke briefly before the dream.
     InterpretResponse:
       type: object
       description: Standard success envelope for a completed context-aware reflection.
@@ -377,33 +404,6 @@ components:
           type: string
           description: DreamThreads API envelope version.
           example: v1
-    InterpretRequest:
-      type: object
-      description: Inputs for a context-aware, tentative dream reflection.
-      additionalProperties: false
-      required:
-      - text
-      properties:
-        text:
-          type: string
-          minLength: 1
-          maxLength: 6000
-          description: Dream text. Keep the key server-side and obtain appropriate user consent before transmitting personal content.
-        lens:
-          type: string
-          maxLength: 80
-          description: Optional interpretive emphasis, such as emotional processing or recurring patterns.
-          example: emotional processing
-        waking_context:
-          type: string
-          maxLength: 2000
-          description: Optional waking-life context supplied by the dreamer; omit rather than infer it.
-          example: I recently started caring for a garden.
-        physiological_context:
-          type: string
-          maxLength: 1000
-          description: Optional sleep, health, medication, or physical context explicitly supplied by the dreamer.
-          example: I woke briefly before the dream.
   securitySchemes:
     bearerAuth:
       type: http
