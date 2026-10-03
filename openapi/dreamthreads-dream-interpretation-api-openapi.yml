@@ -89,21 +89,21 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 components:
   responses:
-    ServiceUnavailable:
-      description: The requested DreamGraph capability is temporarily unavailable or disabled.
+    UpstreamFailure:
+      description: The interpretation model or supporting upstream service failed.
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            type: https://mydreamthreads.xyz/problems/feature_disabled
+            type: https://mydreamthreads.xyz/problems/interpretation_failed
             title: DreamThreads API request failed
-            status: 503
-            detail: DreamGraph external API is not enabled.
+            status: 502
+            detail: Interpretation failed.
             instance: https://mydreamthreads.xyz/problems/requests/example-request-123
             error:
-              code: feature_disabled
-              message: DreamGraph external API is not enabled.
+              code: interpretation_failed
+              message: Interpretation failed.
             request_id: example-request-123
             version: v1
     PayloadTooLarge:
@@ -123,38 +123,21 @@ components:
               message: Request payload is too large.
             request_id: example-request-123
             version: v1
-    UpstreamFailure:
-      description: The interpretation model or supporting upstream service failed.
+    ServiceUnavailable:
+      description: The requested DreamGraph capability is temporarily unavailable or disabled.
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            type: https://mydreamthreads.xyz/problems/interpretation_failed
+            type: https://mydreamthreads.xyz/problems/feature_disabled
             title: DreamThreads API request failed
-            status: 502
-            detail: Interpretation failed.
+            status: 503
+            detail: DreamGraph external API is not enabled.
             instance: https://mydreamthreads.xyz/problems/requests/example-request-123
             error:
-              code: interpretation_failed
-              message: Interpretation failed.
-            request_id: example-request-123
-            version: v1
-    BadRequest:
-      description: The JSON body or dream input is invalid.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/invalid_dream
-            title: DreamThreads API request failed
-            status: 400
-            detail: Dream text must contain 1-6000 characters.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: invalid_dream
-              message: Dream text must contain 1-6000 characters.
+              code: feature_disabled
+              message: DreamGraph external API is not enabled.
             request_id: example-request-123
             version: v1
     Unauthorized:
@@ -189,6 +172,23 @@ components:
             error:
               code: rate_limit_exceeded
               message: The active request quota is exhausted.
+            request_id: example-request-123
+            version: v1
+    BadRequest:
+      description: The JSON body or dream input is invalid.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/invalid_dream
+            title: DreamThreads API request failed
+            status: 400
+            detail: Dream text must contain 1-6000 characters.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: invalid_dream
+              message: Dream text must contain 1-6000 characters.
             request_id: example-request-123
             version: v1
   schemas:
@@ -255,73 +255,6 @@ components:
           type: string
           description: DreamThreads API envelope version.
           example: v1
-    Interpretation:
-      type: object
-      description: Tentative reflection and transparent factors used to produce it.
-      required:
-      - essence
-      - symbols
-      - reading
-      - question
-      - reasonTrace
-      - provenance
-      properties:
-        essence:
-          type: string
-          description: One-sentence tentative synthesis, written with uncertainty rather than certainty.
-          example: The dream may be holding change and attention together without treating either as a threat.
-        symbols:
-          type: array
-          description: Context-qualified observations about prominent dream elements.
-          items:
-            type: object
-            additionalProperties: false
-            required:
-            - symbol
-            - note
-            properties:
-              symbol:
-                type: string
-                description: Dream element as it appeared in the narrative.
-                example: snake
-              note:
-                type: string
-                description: Tentative note qualified by the dream's context and emotion.
-                example: Because you felt peaceful, the snake may point toward alertness or change rather than danger.
-        reading:
-          type: string
-          description: Longer reflective synthesis grounded in the supplied narrative and context.
-          example: Your calm response weakens a simple threat reading and may invite attention before judgment.
-        question:
-          type: string
-          description: Open-ended reflection question; never a diagnosis or prediction.
-          example: What change are you willing to observe before deciding what it means?
-        reasonTrace:
-          type: array
-          description: Factors that materially changed or constrained the reading.
-          items:
-            type: object
-            additionalProperties: true
-            description: One factor, its observed value, and its effect on the reading.
-        provenance:
-          type: array
-          description: Reviewed source or DreamGraph claim references used in the response.
-          items:
-            type: object
-            additionalProperties: true
-            description: Typed provenance record for a supporting claim.
-        dreamgraphVersion:
-          type: string
-          description: DreamGraph knowledge version used for this response.
-          example: dreamgraph-v0.1.0
-        parserVersion:
-          type: string
-          description: Structured parser version used for this response.
-          example: dream-parser-rules-v1.0.0
-        engineVersion:
-          type: string
-          description: Interpretation engine version used for this response.
-          example: dreamgraph-interpretation-v1
     InterpretRequest:
       type: object
       description: Inputs for a context-aware, tentative dream reflection.
@@ -404,6 +337,73 @@ components:
           type: string
           description: DreamThreads API envelope version.
           example: v1
+    Interpretation:
+      type: object
+      description: Tentative reflection and transparent factors used to produce it.
+      required:
+      - essence
+      - symbols
+      - reading
+      - question
+      - reasonTrace
+      - provenance
+      properties:
+        essence:
+          type: string
+          description: One-sentence tentative synthesis, written with uncertainty rather than certainty.
+          example: The dream may be holding change and attention together without treating either as a threat.
+        symbols:
+          type: array
+          description: Context-qualified observations about prominent dream elements.
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - symbol
+            - note
+            properties:
+              symbol:
+                type: string
+                description: Dream element as it appeared in the narrative.
+                example: snake
+              note:
+                type: string
+                description: Tentative note qualified by the dream's context and emotion.
+                example: Because you felt peaceful, the snake may point toward alertness or change rather than danger.
+        reading:
+          type: string
+          description: Longer reflective synthesis grounded in the supplied narrative and context.
+          example: Your calm response weakens a simple threat reading and may invite attention before judgment.
+        question:
+          type: string
+          description: Open-ended reflection question; never a diagnosis or prediction.
+          example: What change are you willing to observe before deciding what it means?
+        reasonTrace:
+          type: array
+          description: Factors that materially changed or constrained the reading.
+          items:
+            type: object
+            additionalProperties: true
+            description: One factor, its observed value, and its effect on the reading.
+        provenance:
+          type: array
+          description: Reviewed source or DreamGraph claim references used in the response.
+          items:
+            type: object
+            additionalProperties: true
+            description: Typed provenance record for a supporting claim.
+        dreamgraphVersion:
+          type: string
+          description: DreamGraph knowledge version used for this response.
+          example: dreamgraph-v0.1.0
+        parserVersion:
+          type: string
+          description: Structured parser version used for this response.
+          example: dream-parser-rules-v1.0.0
+        engineVersion:
+          type: string
+          description: Interpretation engine version used for this response.
+          example: dreamgraph-interpretation-v1
   securitySchemes:
     bearerAuth:
       type: http
