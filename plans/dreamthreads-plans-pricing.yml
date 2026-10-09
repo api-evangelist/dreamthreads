@@ -65,3 +65,22 @@ x-evidence:
   url: https://mydreamthreads.xyz/.well-known/api-onboarding
   http_status: 200
   content_type: application/json
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units: []
+  plans:
+  - name: Public
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
+  - name: Reviewed partner
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
