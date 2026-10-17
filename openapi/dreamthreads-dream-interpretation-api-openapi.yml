@@ -88,110 +88,74 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
 components:
-  responses:
-    RateLimited:
-      description: The active client or partner request quota is exhausted.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/rate_limit_exceeded
-            title: DreamThreads API request failed
-            status: 429
-            detail: The active request quota is exhausted.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: rate_limit_exceeded
-              message: The active request quota is exhausted.
-            request_id: example-request-123
-            version: v1
-    BadRequest:
-      description: The JSON body or dream input is invalid.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/invalid_dream
-            title: DreamThreads API request failed
-            status: 400
-            detail: Dream text must contain 1-6000 characters.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: invalid_dream
-              message: Dream text must contain 1-6000 characters.
-            request_id: example-request-123
-            version: v1
-    ServiceUnavailable:
-      description: The requested DreamGraph capability is temporarily unavailable or disabled.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/feature_disabled
-            title: DreamThreads API request failed
-            status: 503
-            detail: DreamGraph external API is not enabled.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: feature_disabled
-              message: DreamGraph external API is not enabled.
-            request_id: example-request-123
-            version: v1
-    Unauthorized:
-      description: The partner key is missing, invalid, or inactive.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/invalid_api_key
-            title: DreamThreads API request failed
-            status: 401
-            detail: A valid DreamThreads API key is required.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: invalid_api_key
-              message: A valid DreamThreads API key is required.
-            request_id: example-request-123
-            version: v1
-    UpstreamFailure:
-      description: The interpretation model or supporting upstream service failed.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/interpretation_failed
-            title: DreamThreads API request failed
-            status: 502
-            detail: Interpretation failed.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: interpretation_failed
-              message: Interpretation failed.
-            request_id: example-request-123
-            version: v1
-    PayloadTooLarge:
-      description: The HTTP request body exceeds the service limit.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            type: https://mydreamthreads.xyz/problems/payload_too_large
-            title: DreamThreads API request failed
-            status: 413
-            detail: Request payload is too large.
-            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
-            error:
-              code: payload_too_large
-              message: Request payload is too large.
-            request_id: example-request-123
-            version: v1
   schemas:
+    Interpretation:
+      type: object
+      description: Tentative reflection and transparent factors used to produce it.
+      required:
+      - essence
+      - symbols
+      - reading
+      - question
+      - reasonTrace
+      - provenance
+      properties:
+        essence:
+          type: string
+          description: One-sentence tentative synthesis, written with uncertainty rather than certainty.
+          example: The dream may be holding change and attention together without treating either as a threat.
+        symbols:
+          type: array
+          description: Context-qualified observations about prominent dream elements.
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - symbol
+            - note
+            properties:
+              symbol:
+                type: string
+                description: Dream element as it appeared in the narrative.
+                example: snake
+              note:
+                type: string
+                description: Tentative note qualified by the dream's context and emotion.
+                example: Because you felt peaceful, the snake may point toward alertness or change rather than danger.
+        reading:
+          type: string
+          description: Longer reflective synthesis grounded in the supplied narrative and context.
+          example: Your calm response weakens a simple threat reading and may invite attention before judgment.
+        question:
+          type: string
+          description: Open-ended reflection question; never a diagnosis or prediction.
+          example: What change are you willing to observe before deciding what it means?
+        reasonTrace:
+          type: array
+          description: Factors that materially changed or constrained the reading.
+          items:
+            type: object
+            additionalProperties: true
+            description: One factor, its observed value, and its effect on the reading.
+        provenance:
+          type: array
+          description: Reviewed source or DreamGraph claim references used in the response.
+          items:
+            type: object
+            additionalProperties: true
+            description: Typed provenance record for a supporting claim.
+        dreamgraphVersion:
+          type: string
+          description: DreamGraph knowledge version used for this response.
+          example: dreamgraph-v0.1.0
+        parserVersion:
+          type: string
+          description: Structured parser version used for this response.
+          example: dream-parser-rules-v1.0.0
+        engineVersion:
+          type: string
+          description: Interpretation engine version used for this response.
+          example: dreamgraph-interpretation-v1
     Error:
       type: object
       description: RFC 9457 Problem Details response with backward-compatible DreamThreads error fields.
@@ -282,73 +246,6 @@ components:
           maxLength: 1000
           description: Optional sleep, health, medication, or physical context explicitly supplied by the dreamer.
           example: I woke briefly before the dream.
-    Interpretation:
-      type: object
-      description: Tentative reflection and transparent factors used to produce it.
-      required:
-      - essence
-      - symbols
-      - reading
-      - question
-      - reasonTrace
-      - provenance
-      properties:
-        essence:
-          type: string
-          description: One-sentence tentative synthesis, written with uncertainty rather than certainty.
-          example: The dream may be holding change and attention together without treating either as a threat.
-        symbols:
-          type: array
-          description: Context-qualified observations about prominent dream elements.
-          items:
-            type: object
-            additionalProperties: false
-            required:
-            - symbol
-            - note
-            properties:
-              symbol:
-                type: string
-                description: Dream element as it appeared in the narrative.
-                example: snake
-              note:
-                type: string
-                description: Tentative note qualified by the dream's context and emotion.
-                example: Because you felt peaceful, the snake may point toward alertness or change rather than danger.
-        reading:
-          type: string
-          description: Longer reflective synthesis grounded in the supplied narrative and context.
-          example: Your calm response weakens a simple threat reading and may invite attention before judgment.
-        question:
-          type: string
-          description: Open-ended reflection question; never a diagnosis or prediction.
-          example: What change are you willing to observe before deciding what it means?
-        reasonTrace:
-          type: array
-          description: Factors that materially changed or constrained the reading.
-          items:
-            type: object
-            additionalProperties: true
-            description: One factor, its observed value, and its effect on the reading.
-        provenance:
-          type: array
-          description: Reviewed source or DreamGraph claim references used in the response.
-          items:
-            type: object
-            additionalProperties: true
-            description: Typed provenance record for a supporting claim.
-        dreamgraphVersion:
-          type: string
-          description: DreamGraph knowledge version used for this response.
-          example: dreamgraph-v0.1.0
-        parserVersion:
-          type: string
-          description: Structured parser version used for this response.
-          example: dream-parser-rules-v1.0.0
-        engineVersion:
-          type: string
-          description: Interpretation engine version used for this response.
-          example: dreamgraph-interpretation-v1
     InterpretResponse:
       type: object
       description: Standard success envelope for a completed context-aware reflection.
@@ -404,6 +301,109 @@ components:
           type: string
           description: DreamThreads API envelope version.
           example: v1
+  responses:
+    PayloadTooLarge:
+      description: The HTTP request body exceeds the service limit.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/payload_too_large
+            title: DreamThreads API request failed
+            status: 413
+            detail: Request payload is too large.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: payload_too_large
+              message: Request payload is too large.
+            request_id: example-request-123
+            version: v1
+    RateLimited:
+      description: The active client or partner request quota is exhausted.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/rate_limit_exceeded
+            title: DreamThreads API request failed
+            status: 429
+            detail: The active request quota is exhausted.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: rate_limit_exceeded
+              message: The active request quota is exhausted.
+            request_id: example-request-123
+            version: v1
+    ServiceUnavailable:
+      description: The requested DreamGraph capability is temporarily unavailable or disabled.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/feature_disabled
+            title: DreamThreads API request failed
+            status: 503
+            detail: DreamGraph external API is not enabled.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: feature_disabled
+              message: DreamGraph external API is not enabled.
+            request_id: example-request-123
+            version: v1
+    BadRequest:
+      description: The JSON body or dream input is invalid.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/invalid_dream
+            title: DreamThreads API request failed
+            status: 400
+            detail: Dream text must contain 1-6000 characters.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: invalid_dream
+              message: Dream text must contain 1-6000 characters.
+            request_id: example-request-123
+            version: v1
+    UpstreamFailure:
+      description: The interpretation model or supporting upstream service failed.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/interpretation_failed
+            title: DreamThreads API request failed
+            status: 502
+            detail: Interpretation failed.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: interpretation_failed
+              message: Interpretation failed.
+            request_id: example-request-123
+            version: v1
+    Unauthorized:
+      description: The partner key is missing, invalid, or inactive.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            type: https://mydreamthreads.xyz/problems/invalid_api_key
+            title: DreamThreads API request failed
+            status: 401
+            detail: A valid DreamThreads API key is required.
+            instance: https://mydreamthreads.xyz/problems/requests/example-request-123
+            error:
+              code: invalid_api_key
+              message: A valid DreamThreads API key is required.
+            request_id: example-request-123
+            version: v1
   securitySchemes:
     bearerAuth:
       type: http
