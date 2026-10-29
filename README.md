@@ -1,4 +1,4 @@
-# dreamthreads
+# DreamThreads
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,4 +64,104 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-DreamThreads exposes the DreamGraph API, a context-first dream interpretation and structured parsing platform. It offers a keyless public dream parser, gated partner interpretation endpoints, a hosted MCP server, and full machine-readable contracts. Interpretations are framed as reflective, not diag
+DreamThreads exposes the DreamGraph API, a context-first dream interpretation and structured parsing platform. It offers a keyless public dream parser, gated partner interpretation endpoints, a hosted MCP server, and full machine-readable contracts. Interpretations are framed as reflective, not diagnostic or predictive.
+
+**Areas:** dream analysis · Dream interpretation · Natural Language Processing · structured parsing · AI Agents · MCP Server · OpenAPI · wellness / sleep · research tooling
+
+## DreamThreads on APIs.io
+
+Everything profiled for DreamThreads is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/dreamthreads/](https://apis.io/providers/dreamthreads/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [DreamThreads Dream interpretation API](https://apis.io/apis/dreamthreads/dreamthreads-dream-interpretation-api/) — Generate a tentative, context-aware dream reflection with a factor trace and provenance.
+- [DreamThreads Dream parsing API](https://apis.io/apis/dreamthreads/dreamthreads-dream-parsing-api/) — Turn dream text into structured entities, emotions, actions, agency, threat, outcome, and recurrence.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (2)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [DreamThreads DreamGraph](https://apis.io/servers/dreamthreads/io-github-abdulrahimiqbal-dreamthreads/)
+- [Moved to /providers/dreamthreads/](https://apis.io/servers/dreamthreads/mcp/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Dreamthreads Agentic Access](https://apis.io/agentic-access/dreamthreads/dreamthreads-agentic-access/)
+
+#### JSON Schema (4)
+
+The data models the API reads and writes.
+
+- [Dreamthreads Mcp Parse Dream Input.Schema](https://apis.io/schemas/dreamthreads/dreamthreads-mcp-parse-dream-input.schema/)
+- [Dreamthreads Mcp Parse Dream Output.Schema](https://apis.io/schemas/dreamthreads/dreamthreads-mcp-parse-dream-output.schema/)
+- [Dreamthreads Mcp Search Dream Concepts Input.Schema](https://apis.io/schemas/dreamthreads/dreamthreads-mcp-search-dream-concepts-input.schema/)
+- [Dreamthreads Mcp Search Dream Concepts Output.Schema](https://apis.io/schemas/dreamthreads/dreamthreads-mcp-search-dream-concepts-output.schema/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [DreamGraph concept vocabulary](https://apis.io/vocabularies/dreamthreads/dreamthreads-dreamgraph-vocabulary/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Dreamthreads Dreamgraph Overlay](https://apis.io/overlays/dreamthreads/dreamthreads-dreamgraph-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Dreamthreads Authentication](https://apis.io/security/dreamthreads/dreamthreads-authentication/)
+- [Dreamthreads Domain Security](https://apis.io/security/dreamthreads/dreamthreads-domain-security/)
+- [Dreamthreads Vulnerability Disclosure](https://apis.io/security/dreamthreads/dreamthreads-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Dreamthreads Plans Pricing](https://apis.io/plans/dreamthreads/dreamthreads-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Dreamthreads Rate Limits](https://apis.io/rate-limits/dreamthreads/dreamthreads-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Documentation](https://mydreamthreads.xyz/dream-interpretation-api)
+- [Getting started](https://mydreamthreads.xyz/dream-interpretation-api#free-parser)
+- [API reference](https://abdulrahimiqbal.github.io/dreamthreads-developer/)
+- [Pricing](https://mydreamthreads.xyz/dream-interpretation-api#request-access)
+- [Sign up](https://mydreamthreads.xyz/dream-interpretation-api#request-access)
+- [Security](https://github.com/abdulrahimiqbal/dreamthreads-developer/blob/main/SECURITY.md)
+- [Terms of service](https://mydreamthreads.xyz/terms)
+- [Privacy policy](https://mydreamthreads.xyz/privacy)
+
+## API Evangelist rating
+
+**Unrated** — no public website could be reached for this company, so there was almost nothing to measure and nothing a reader could check.
+
+This is not a score of zero. No rating is published for this company. If that is wrong because something public exists that we missed, say so on this repository or email [info@apievangelist.com](mailto:info@apievangelist.com) and it will be re-run — free, and no justification needed.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for DreamThreads: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/dreamthreads/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
